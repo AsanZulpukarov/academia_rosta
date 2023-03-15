@@ -3,14 +3,14 @@ import 'package:academi_rost/pages/trener_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SecondPage extends StatefulWidget {
-  const SecondPage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<SecondPage> createState() => _SecondPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _SecondPageState extends State<SecondPage> {
+class _MainPageState extends State<MainPage> {
   int _selectedIndex = 1;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -27,6 +27,7 @@ class _SecondPageState extends State<SecondPage> {
   ];
 
   void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
     setState(() {
       _selectedIndex = index;
     });
@@ -55,39 +56,28 @@ class _SecondPageState extends State<SecondPage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        iconSize: 40.0.sp,
-        backgroundColor: ThemeThisApp.fillButton,
+        iconSize: 30.0.sp,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.calendar_month,
-              color: _selectedIndex == 0
-                  ? ThemeThisApp.borderColor
-                  : ThemeThisApp.textInButtonColor,
             ),
             label: 'Расписание',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.calculate,
-              color: _selectedIndex == 1
-                  ? ThemeThisApp.borderColor
-                  : ThemeThisApp.textInButtonColor,
             ),
             label: 'Тренировка',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.query_stats,
-              color: _selectedIndex == 2
-                  ? ThemeThisApp.borderColor
-                  : ThemeThisApp.textInButtonColor,
             ),
             label: 'Статистика',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: ThemeThisApp.borderColor,
         onTap: _onItemTapped,
       ),
     );
