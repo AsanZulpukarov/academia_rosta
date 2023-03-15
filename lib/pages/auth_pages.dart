@@ -26,7 +26,7 @@ class _FormRegisterState extends State<FormRegister> {
   bool isSelectRole = true;
   bool rememberMe = false;
 
-  User newUser = User();
+  // UserLoginPassword newUser = UserLoginPassword();
 
   @override
   void dispose() {
@@ -97,7 +97,7 @@ class _FormRegisterState extends State<FormRegister> {
                     ),
                     border: borderTextField,
                   ),
-                  onSaved: (value) => newUser.userName = value!,
+                  // onSaved: (value) => newUser.userName = value!,
                 ),
               ),
               SizedBox(
@@ -138,7 +138,7 @@ class _FormRegisterState extends State<FormRegister> {
                     ),
                     border: borderTextField,
                   ),
-                  onSaved: (value) => newUser.password = value!,
+                  // onSaved: (value) => newUser.password = value!,
                 ),
               ),
               SizedBox(

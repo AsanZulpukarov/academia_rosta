@@ -1,4 +1,3 @@
-import 'package:academi_rost/ThemeThisApp.dart';
 import 'package:academi_rost/pages/trener_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +18,7 @@ class _MainPageState extends State<MainPage> {
       'Index 1: Business',
       style: optionStyle,
     ),
-    TrenerPage(),
+    TrainerPage(),
     Text(
       'Index 2: School',
       style: optionStyle,

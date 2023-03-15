@@ -1,6 +1,7 @@
 import 'package:academi_rost/ThemeThisApp.dart';
 import 'package:academi_rost/pages/auth_pages.dart';
 import 'package:academi_rost/pages/splash_screen.dart';
+import 'package:academi_rost/pages/user_profil_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -29,11 +30,12 @@ class SignIn extends StatelessWidget {
                 unselectedItemColor: ThemeThisApp.textInButtonColor,
               )),
           routes: {
-            '/': (context) => SplashScreen(),
+            '/splash_screen': (context) => SplashScreen(),
             '/auth': (context) => FormRegister(),
             '/main_page': (context) => MainPage(),
+            '/user_profile': (context) => UserProfileScreen(),
           },
-          initialRoute: '/',
+          initialRoute: '/splash_screen',
         );
       },
     );
