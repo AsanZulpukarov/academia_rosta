@@ -1,15 +1,24 @@
-class _UserLoginPassword {
-  late String _userName;
-  late String _password;
-  late String _token;
+enum Gender { male, female }
+
+enum Role {
+  student,
+  teacher,
+}
+
+class UserLoginPassword {
+  String? userName;
+  String? _password;
+  String? _token;
 }
 
 abstract class User {
-  late _UserLoginPassword __userLoginPassword;
-  late String firstName;
-  late String lastName;
-  late String fatherName;
-  late int age;
-  late String phone_number;
-  late String address;
+  UserLoginPassword? userLoginPassword;
+  String? firstName;
+  String? lastName;
+  String? fatherName;
+  int? age;
+  String? phone_number;
+  String? address;
+  late Gender gender;
+  late Role role;
 }

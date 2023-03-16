@@ -31,13 +31,13 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Center(
             child: Image.asset(
-                height: 200.h, width: 400.w, 'assets/splash_screen_image.png'),
+                height: 180.h, width: 300.w, 'assets/splash_screen_image.png'),
           ),
           Center(
             child: Text(
               "АКАДЕМИЯ РОСТА",
               style: TextStyle(
-                  fontSize: 40.sp,
+                  fontSize: 36.sp,
                   fontWeight: FontWeight.w800,
                   color: ThemeThisApp.borderColor),
             ),

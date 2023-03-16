@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../ThemeThisApp.dart';
-import '../model/entity/user_entity.dart';
 
 class FormRegister extends StatefulWidget {
   const FormRegister({Key? key}) : super(key: key);
@@ -35,10 +34,6 @@ class _FormRegisterState extends State<FormRegister> {
     super.dispose();
   }
 
-  final borderTextField = OutlineInputBorder(
-    borderSide: BorderSide(color: ThemeThisApp.fillButton, width: 2.0.w),
-    borderRadius: BorderRadius.circular(20.0.r),
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,34 +64,34 @@ class _FormRegisterState extends State<FormRegister> {
                 width: 274.w,
                 height: 34.h,
                 child: TextFormField(
+                  style: ThemeThisApp.styleTextBase,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return '';
                     }
                     return value;
                   },
-                  maxLines: 1,
-                  textAlignVertical: TextAlignVertical.bottom,
+                  minLines: 1,
                   controller: username,
                   decoration: InputDecoration(
-                    labelText: 'Логин',
-                    hintText: 'Логин',
-                    icon: Icon(
-                      Icons.person,
-                      color: ThemeThisApp.fillButton,
-                      size: 33.sp,
-                    ),
-                    suffixIcon: IconButton(
+                      labelText: 'Логин',
+                      hintText: 'Логин',
                       icon: Icon(
-                        Icons.delete,
-                        color: ThemeThisApp.borderColor,
+                        Icons.person,
+                        color: ThemeThisApp.fillButton,
+                        size: 33.sp,
                       ),
-                      onPressed: () {
-                        username.clear();
-                      },
-                    ),
-                    border: borderTextField,
-                  ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.delete,
+                          color: ThemeThisApp.borderColor,
+                        ),
+                        onPressed: () {
+                          username.clear();
+                        },
+                      ),
+                      enabledBorder: ThemeThisApp.borderTextField,
+                      focusedBorder: ThemeThisApp.borderTextField),
                   // onSaved: (value) => newUser.userName = value!,
                 ),
               ),
@@ -107,37 +102,37 @@ class _FormRegisterState extends State<FormRegister> {
                 width: 274.w,
                 height: 34.h,
                 child: TextFormField(
+                  style: ThemeThisApp.styleTextBase,
+                  maxLines: 1,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return '';
                     }
                     return value;
                   },
-                  maxLines: 1,
-                  textAlignVertical: TextAlignVertical.bottom,
                   controller: password,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'Пароль',
-                    hintText: 'Пароль',
-                    icon: Icon(
-                      Icons.security,
-                      color: ThemeThisApp.fillButton,
-                      size: 33,
-                    ),
-                    suffixIcon: IconButton(
+                      labelText: 'Пароль',
+                      hintText: 'Пароль',
                       icon: Icon(
-                        _hidePass ? Icons.visibility : Icons.visibility_off,
-                        color: ThemeThisApp.borderColor,
+                        Icons.security,
+                        color: ThemeThisApp.fillButton,
+                        size: 33,
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _hidePass = !_hidePass;
-                        });
-                      },
-                    ),
-                    border: borderTextField,
-                  ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _hidePass ? Icons.visibility : Icons.visibility_off,
+                          color: ThemeThisApp.borderColor,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _hidePass = !_hidePass;
+                          });
+                        },
+                      ),
+                      enabledBorder: ThemeThisApp.borderTextField,
+                      focusedBorder: ThemeThisApp.borderTextField),
                   // onSaved: (value) => newUser.password = value!,
                 ),
               ),
@@ -222,9 +217,7 @@ class _FormRegisterState extends State<FormRegister> {
                 height: 17.h,
               ),
               ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll<Color>(
-                        ThemeThisApp.fillButton)),
+                style: ThemeThisApp.styleButton,
                 onPressed: () {
                   setState(() {
                     // if (_formKey.currentState!.validate()) {

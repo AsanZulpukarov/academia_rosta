@@ -35,7 +35,11 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
               IconButton(
                 iconSize: icon_size,
                 tooltip: 'Уменьшить',
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    num -= 1.00;
+                  });
+                },
                 icon: Icon(
                   Icons.remove_circle_outline,
                   color: ThemeThisApp.borderColor,

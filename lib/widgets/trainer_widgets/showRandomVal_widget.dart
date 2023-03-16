@@ -1,3 +1,4 @@
+import 'package:academi_rost/ThemeThisApp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,14 +22,22 @@ class ShowRandomValWidgetState extends State<ShowRandomValWidget> {
               width: 112.w,
               height: 90.h,
               alignment: Alignment.center,
-              child: Text("Random")),
+              child: Text(
+                "Random",
+                style: ThemeThisApp.styleTextHeader,
+              )),
           SizedBox(
             width: 112.w,
             height: 42.h,
             child: TextField(
+              style: ThemeThisApp.styleTextBase,
               decoration: InputDecoration(
-                label: Text('Ответ'),
-              ),
+                  label: Text(
+                    'Ответ',
+                    style: ThemeThisApp.styleTextBase,
+                  ),
+                  enabledBorder: ThemeThisApp.borderTextField,
+                  focusedBorder: ThemeThisApp.borderTextField),
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly

@@ -1,6 +1,4 @@
-import 'package:academi_rost/ThemeThisApp.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/trainer_widgets/characterShowVal_widget.dart';
 import '../widgets/trainer_widgets/expansionTile_widget.dart';

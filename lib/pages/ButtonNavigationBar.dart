@@ -1,4 +1,5 @@
-import 'package:academi_rost/pages/trener_page.dart';
+import 'package:academi_rost/pages/student_pages/timetable_student_screen.dart';
+import 'package:academi_rost/pages/trainer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,10 +15,7 @@ class _MainPageState extends State<MainPage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    TimetableStudentScreen(),
     TrainerPage(),
     Text(
       'Index 2: School',
@@ -46,7 +44,9 @@ class _MainPageState extends State<MainPage> {
         actions: [
           IconButton(
             iconSize: 30.sp,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/user_profile');
+            },
             icon: Icon(Icons.person),
           ),
         ],
