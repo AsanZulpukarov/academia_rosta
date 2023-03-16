@@ -13,7 +13,7 @@ class ShowRandomValWidget extends StatefulWidget {
 class ShowRandomValWidgetState extends State<ShowRandomValWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 112.w,
       height: 133.h,
       child: Column(
@@ -32,10 +32,9 @@ class ShowRandomValWidgetState extends State<ShowRandomValWidget> {
             child: TextField(
               style: ThemeThisApp.styleTextBase,
               decoration: InputDecoration(
-                  label: Text(
-                    'Ответ',
-                    style: ThemeThisApp.styleTextBase,
-                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  labelText: 'Ответ',
+                  labelStyle: ThemeThisApp.styleTextBase,
                   enabledBorder: ThemeThisApp.borderTextField,
                   focusedBorder: ThemeThisApp.borderTextField),
               keyboardType: TextInputType.number,

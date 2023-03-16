@@ -17,7 +17,7 @@ abstract class User {
   String? lastName;
   String? fatherName;
   int? age;
-  String? phone_number;
+  String? phoneNumber;
   String? address;
   late Gender gender;
   late Role role;

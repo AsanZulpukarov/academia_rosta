@@ -20,6 +20,8 @@ class _FormRegisterState extends State<FormRegister> {
 
   final username = TextEditingController();
   final password = TextEditingController();
+  final _focusUsername = FocusNode();
+  final _focusPassword = FocusNode();
   bool _hidePass = true;
   String? role = '';
   bool isSelectRole = true;
@@ -29,16 +31,198 @@ class _FormRegisterState extends State<FormRegister> {
 
   @override
   void dispose() {
+    _focusUsername.dispose();
+    _focusPassword.dispose();
     username.dispose();
     password.dispose();
     super.dispose();
+  }
+
+  Widget _getImageLogo() {
+    return Container(
+      alignment: Alignment.center,
+      width: 250.w,
+      height: 71.h,
+      child: Image.asset(
+        'assets/logo/Logo.png',
+      ),
+    );
+  }
+
+  Widget _getTextField() {
+    return SizedBox(
+      width: 274.w,
+      child: Column(
+        children: [
+          TextFormField(
+            autofocus: true,
+            focusNode: _focusUsername,
+            onFieldSubmitted: (_) {
+              _focusUsername.nextFocus();
+            },
+            textInputAction: TextInputAction.next,
+            style: ThemeThisApp.styleTextBase,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '';
+              }
+              return value;
+            },
+            controller: username,
+            decoration: InputDecoration(
+              isCollapsed: true,
+              contentPadding: EdgeInsets.all(12.0.sp),
+              labelText: 'Логин',
+              labelStyle: ThemeThisApp.styleTextBase,
+              hintText: 'Логин',
+              icon: Icon(
+                Icons.person,
+                color: ThemeThisApp.fillButton,
+                size: 33.sp,
+              ),
+              suffixIcon: IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: ThemeThisApp.borderColor,
+                ),
+                onPressed: () {
+                  username.clear();
+                },
+              ),
+              border: ThemeThisApp.borderTextField,
+              // onSaved: (value) => newUser.userName = value!,
+            ),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          TextFormField(
+            focusNode: _focusPassword,
+            onFieldSubmitted: (_) {
+              _focusPassword.unfocus();
+            },
+            textInputAction: TextInputAction.done,
+            style: ThemeThisApp.styleTextBase,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '';
+              }
+              return value;
+            },
+            controller: password,
+            obscureText: _hidePass,
+            decoration: InputDecoration(
+              isCollapsed: true,
+              contentPadding: EdgeInsets.all(12.0.sp),
+              labelText: 'Пароль',
+              labelStyle: ThemeThisApp.styleTextBase,
+              hintText: 'Пароль',
+              icon: const Icon(
+                Icons.security,
+                color: ThemeThisApp.fillButton,
+                size: 33,
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _hidePass ? Icons.visibility : Icons.visibility_off,
+                  color: ThemeThisApp.borderColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _hidePass = !_hidePass;
+                  });
+                },
+              ),
+              border: ThemeThisApp.borderTextField,
+            ),
+            // onSaved: (value) => newUser.password = value!,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getRadioButton() {
+    return Container(
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            children: [
+              Radio(
+                activeColor: ThemeThisApp.borderColor,
+                value: "teacher",
+                groupValue: role,
+                onChanged: (value) {
+                  setState(() {
+                    role = value.toString();
+                  });
+                },
+              ),
+              const Text(
+                "Учитель",
+                style: TextStyle(color: ThemeThisApp.fillButton),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 26.w,
+          ),
+          Row(
+            children: [
+              Radio(
+                activeColor: ThemeThisApp.borderColor,
+                value: "student",
+                groupValue: role,
+                onChanged: (value) {
+                  setState(() {
+                    role = value.toString();
+                  });
+                },
+              ),
+              const Text(
+                "Ученик",
+                style: TextStyle(color: ThemeThisApp.fillButton),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getRowCheckBox() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Запомнить меня",
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: ThemeThisApp.fillButton,
+          ),
+        ),
+        Checkbox(
+          activeColor: ThemeThisApp.borderColor,
+          value: rememberMe,
+          onChanged: (value) {
+            setState(
+              () {
+                rememberMe = value!;
+              },
+            );
+          },
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'ВХОД',
         ),
         centerTitle: true,
@@ -48,171 +232,20 @@ class _FormRegisterState extends State<FormRegister> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // SizedBox(
-              Container(
-                alignment: Alignment.center,
-                width: 250.w,
-                height: 71.h,
-                child: Image.asset(
-                  'assets/logo/Logo.png',
-                ),
-              ),
+              _getImageLogo(),
+              // SizedBox()
               SizedBox(
                 height: 68.h,
               ),
-              SizedBox(
-                width: 274.w,
-                height: 34.h,
-                child: TextFormField(
-                  style: ThemeThisApp.styleTextBase,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '';
-                    }
-                    return value;
-                  },
-                  minLines: 1,
-                  controller: username,
-                  decoration: InputDecoration(
-                      labelText: 'Логин',
-                      hintText: 'Логин',
-                      icon: Icon(
-                        Icons.person,
-                        color: ThemeThisApp.fillButton,
-                        size: 33.sp,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                          color: ThemeThisApp.borderColor,
-                        ),
-                        onPressed: () {
-                          username.clear();
-                        },
-                      ),
-                      enabledBorder: ThemeThisApp.borderTextField,
-                      focusedBorder: ThemeThisApp.borderTextField),
-                  // onSaved: (value) => newUser.userName = value!,
-                ),
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              SizedBox(
-                width: 274.w,
-                height: 34.h,
-                child: TextFormField(
-                  style: ThemeThisApp.styleTextBase,
-                  maxLines: 1,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '';
-                    }
-                    return value;
-                  },
-                  controller: password,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      labelText: 'Пароль',
-                      hintText: 'Пароль',
-                      icon: Icon(
-                        Icons.security,
-                        color: ThemeThisApp.fillButton,
-                        size: 33,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _hidePass ? Icons.visibility : Icons.visibility_off,
-                          color: ThemeThisApp.borderColor,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _hidePass = !_hidePass;
-                          });
-                        },
-                      ),
-                      enabledBorder: ThemeThisApp.borderTextField,
-                      focusedBorder: ThemeThisApp.borderTextField),
-                  // onSaved: (value) => newUser.password = value!,
-                ),
-              ),
+              _getTextField(),
               SizedBox(
                 height: 11.h,
               ),
-              Container(
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Radio(
-                          activeColor: ThemeThisApp.borderColor,
-                          value: "teacher",
-                          groupValue: role,
-                          onChanged: (value) {
-                            setState(() {
-                              role = value.toString();
-                            });
-                          },
-                        ),
-                        Text(
-                          "Учитель",
-                          style: TextStyle(color: ThemeThisApp.fillButton),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 26.w,
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          activeColor: ThemeThisApp.borderColor,
-                          value: "student",
-                          groupValue: role,
-                          onChanged: (value) {
-                            setState(() {
-                              role = value.toString();
-                            });
-                          },
-                        ),
-                        Text(
-                          "Ученик",
-                          style: TextStyle(color: ThemeThisApp.fillButton),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              _getRadioButton(),
               SizedBox(
                 height: 50.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Запомнить меня",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: ThemeThisApp.fillButton,
-                    ),
-                  ),
-                  Checkbox(
-                    activeColor: ThemeThisApp.borderColor,
-                    value: rememberMe,
-                    onChanged: (value) {
-                      setState(
-                        () {
-                          print("value $value");
-                          rememberMe = value!;
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
+              _getRowCheckBox(),
               SizedBox(
                 height: 17.h,
               ),
@@ -232,7 +265,7 @@ class _FormRegisterState extends State<FormRegister> {
                   });
                   Navigator.pushReplacementNamed(context, '/main_page');
                 },
-                child: Text("Войти"),
+                child: const Text("Войти"),
               ),
             ],
           ),

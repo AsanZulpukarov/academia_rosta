@@ -10,8 +10,8 @@ class ExpansionTileWidget extends StatefulWidget {
 
 class _ExpansionTileState extends State<ExpansionTileWidget> {
   var _PSV = ['ПСВ'];
-  var _pomoshBrata = ['+1', '-1', '+2', '-2', '+3', '-3', '+4', '-4'];
-  var _pomoshDruga = [
+  final _pomoshBrata = ['+1', '-1', '+2', '-2', '+3', '-3', '+4', '-4'];
+  final _pomoshDruga = [
     '+1',
     '-1',
     '+2',
@@ -31,10 +31,9 @@ class _ExpansionTileState extends State<ExpansionTileWidget> {
     '+9',
     '-9'
   ];
-  bool _customTileExpanded = false;
 
   Widget _widgetExpansionTile() {
-    var _selectedCountry;
+    var selectedCountry;
     return DropdownButtonFormField(
       decoration: const InputDecoration(
           border: OutlineInputBorder(),
@@ -42,49 +41,22 @@ class _ExpansionTileState extends State<ExpansionTileWidget> {
           labelText: 'ПСВ'),
       items: _pomoshDruga.map((country) {
         return DropdownMenuItem(
-          child: Text(country),
           value: country,
+          child: Text(country),
         );
       }).toList(),
       onChanged: (country) {
-        print(country);
         setState(() {
-          _selectedCountry = country as String;
-          // newUser.country = country;
+          selectedCountry = country as String;
         });
       },
-      value: _selectedCountry,
-      // validator: (val) {
-      //   return val == null ? 'Please select a country' : null;
-      // },
+      value: selectedCountry,
     );
-    // return ExpansionTile(
-    //   title: Text('Part 1'),
-    //   trailing: Icon(
-    //     _customTileExpanded
-    //         ? Icons.arrow_drop_down_circle
-    //         : Icons.arrow_drop_down,
-    //   ),
-    //   children: [
-    //     Row(
-    //       // mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         Text(
-    //           '${_PSV[0]}',
-    //           style: TextStyle(
-    //             fontSize: 16.sp,
-    //             color: ThemeThisApp.fillButton,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 276.w,
       child: Column(
         children: [

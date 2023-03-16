@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StudentProfileScreen extends StatelessWidget {
-  Map<String, String> _userInfo = {
+  final Map<String, String> _userInfo = {
     'ФИО:': '{user.lastName} {user.firstName} {user.fatherName}',
     'Возраст:': '{user.age}',
     'Логин:': '{user.userLoginPassword.userName}',
     'Номер тел:': '{user.phone_number}',
     'Адрес:': '{user.address}',
   };
+
+  StudentProfileScreen({super.key});
 
   Row getRowText(String text1, String text2) {
     return Row(
@@ -49,7 +51,7 @@ class StudentProfileScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Назад', style: ThemeThisApp.styleTextButton))
+                child: const Text('Назад', style: ThemeThisApp.styleTextButton))
           ],
         ),
         body: Container(
@@ -57,7 +59,7 @@ class StudentProfileScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                 width: 150.w,
                 height: 150.h,
                 child: Image.asset(
@@ -76,12 +78,12 @@ class StudentProfileScreen extends StatelessWidget {
                 height: 70.h,
               ),
               ElevatedButton(
-                  style: ButtonStyle(
+                  style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll<Color>(
                         ThemeThisApp.fillButton),
                   ),
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "Выйти",
                     style: ThemeThisApp.styleTextButton,
                   )),

@@ -11,14 +11,14 @@ class CharacterShowValWidget extends StatefulWidget {
 }
 
 class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
-  Map<String, double> _characterTrainer = {
+  final Map<String, double> _characterTrainer = {
     "Скорость": 1.00,
     "Разрядность": 1.00,
     "Количество переменных": 1.00
   };
   Widget _rowTextAndIcon(String text, double num) {
     var icon_size = 18.sp;
-    return Container(
+    return SizedBox(
       width: 276.w,
       height: 32.h,
       child: Row(
@@ -27,7 +27,7 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(color: ThemeThisApp.fillButton),
+              style: const TextStyle(color: ThemeThisApp.fillButton),
             ),
           ),
           Row(
@@ -40,7 +40,7 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
                     num -= 1.00;
                   });
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.remove_circle_outline,
                   color: ThemeThisApp.borderColor,
                 ),
@@ -50,8 +50,8 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
                 width: 26.w,
                 alignment: Alignment.center,
                 child: Text(
-                  "${num}",
-                  style: TextStyle(color: ThemeThisApp.fillButton),
+                  "$num",
+                  style: const TextStyle(color: ThemeThisApp.fillButton),
                 ),
               ),
               IconButton(
@@ -63,7 +63,7 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
                     num += 1.00;
                   });
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.add_circle_outline,
                   color: ThemeThisApp.borderColor,
                 ),
@@ -77,18 +77,16 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            width: 276.w,
-            child: Column(
-                children: _characterTrainer.entries.map((entry) {
-              return _rowTextAndIcon(entry.key, entry.value);
-            }).toList()),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        SizedBox(
+          width: 276.w,
+          child: Column(
+              children: _characterTrainer.entries.map((entry) {
+            return _rowTextAndIcon(entry.key, entry.value);
+          }).toList()),
+        ),
+      ],
     );
   }
 }

@@ -35,7 +35,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         title: Container(
-          width: 175.w,
+          width: 175,
           padding: EdgeInsets.all(10.0.sp),
           child: Image.asset(
             'assets/logo/logo_WB.png',
@@ -47,7 +47,7 @@ class _MainPageState extends State<MainPage> {
             onPressed: () {
               Navigator.pushNamed(context, '/user_profile');
             },
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
           ),
         ],
       ),
@@ -56,7 +56,7 @@ class _MainPageState extends State<MainPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 30.0.sp,
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.calendar_month,

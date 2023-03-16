@@ -16,10 +16,10 @@ class ThemeThisApp {
       fontWeight: FontWeight.bold,
       fontSize: 16.sp);
   static var borderTextField = OutlineInputBorder(
-    borderSide: BorderSide(color: borderColor, width: 1.0.w),
+    borderSide: BorderSide(color: borderColor, width: 2.0.w),
     borderRadius: BorderRadius.circular(20.0.r),
   );
   static var borderDecoration = BoxDecoration(
-      border: Border.all(color: ThemeThisApp.borderColor, width: 2.0),
+      border: Border.all(color: ThemeThisApp.borderColor, width: 2.0.w),
       borderRadius: BorderRadius.circular(20.0.sp));
 }

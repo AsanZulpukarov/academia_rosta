@@ -8,7 +8,7 @@ class TimetableStudentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> courses = ['Math', 'Fiz', 'Bio', 'Bil'];
     return ListView.builder(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         itemCount: courses.length,
         itemBuilder: (context, index) {
           return _getExpansionTile(courses[index]);
@@ -45,7 +45,7 @@ class TimetableStudentScreen extends StatelessWidget {
           decoration: ThemeThisApp.borderDecoration,
           child: ExpansionTile(
             maintainState: false,
-            childrenPadding: EdgeInsets.all(12.0),
+            childrenPadding: const EdgeInsets.all(12.0),
             title: Text(
               nameCourse,
               style: ThemeThisApp.styleTextHeader,
