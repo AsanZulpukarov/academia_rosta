@@ -1,19 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../widgets/trainer_widgets/characterShowVal_widget.dart';
-import '../widgets/trainer_widgets/expansionTile_widget.dart';
-import '../widgets/trainer_widgets/showRandomVal_widget.dart';
+import '../ThemeThisApp.dart';
+import '../widgets/trainer_widgets/character_show_val_widget.dart';
+import '../widgets/trainer_widgets/study_theme_widget.dart';
+import '../widgets/trainer_widgets/show_random_val_widget.dart';
 
-class TrainerPage extends StatelessWidget {
+class TrainerPage extends StatefulWidget {
   const TrainerPage({Key? key}) : super(key: key);
 
   @override
+  State<TrainerPage> createState() => _TrainerPageState();
+}
+
+class _TrainerPageState extends State<TrainerPage> {
+  @override
   Widget build(BuildContext context) {
     return ListView(
-      children: const <Widget>[
+      children: <Widget>[
         ShowRandomValWidget(),
         CharacterShowValWidget(),
-        ExpansionTileWidget(),
+        StudyTheme(),
+        Container(
+          alignment: Alignment.center,
+          width: 102.w,
+          height: 32.h,
+          child: ElevatedButton(
+            style: const ButtonStyle(
+              backgroundColor:
+                  MaterialStatePropertyAll<Color>(ThemeThisApp.fillButton),
+            ),
+            onPressed: () {},
+            child: const Text(
+              "Начать",
+              style: ThemeThisApp.styleTextButton,
+            ),
+          ),
+        ),
       ],
     );
   }

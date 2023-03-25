@@ -1,4 +1,6 @@
+import 'package:academi_rost/pages/student_pages/static_screen.dart';
 import 'package:academi_rost/pages/student_pages/timetable_student_screen.dart';
+import 'package:academi_rost/pages/teacher_pages/groups_pages.dart';
 import 'package:academi_rost/pages/trainer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,13 +16,10 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 1;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     TimetableStudentScreen(),
     TrainerPage(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    StaticScreen(),
   ];
 
   void _onItemTapped(int index) {

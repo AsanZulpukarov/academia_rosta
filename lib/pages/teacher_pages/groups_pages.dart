@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../widgets/get_row_text_widget.dart';
 
-class TimetableStudentScreen extends StatelessWidget {
-  const TimetableStudentScreen({Key? key}) : super(key: key);
+class GroupsPages extends StatelessWidget {
+  const GroupsPages({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    List<String> courses = ['Math', 'Fiz', 'Bio', 'Bil'];
+    List<String> courses = ['1-group', '2-group', '3-group', '4-group'];
     return ListView.builder(
         padding: const EdgeInsets.all(16.0),
         itemCount: courses.length,
@@ -31,9 +31,11 @@ class TimetableStudentScreen extends StatelessWidget {
               style: ThemeThisApp.styleTextHeader,
             ),
             children: [
-              GetRowText.getText('Учитель:', 'ФИО'),
-              GetRowText.getText('Группа:', '2группа'),
-              GetRowText.getText('Расписание:', 'ПН-СР-ПТ 18:00'),
+              GetRowText.getText('Ученик:', 'ФИО'),
+              GetRowText.getText('Ученик:', 'ФИО'),
+              GetRowText.getText('Ученик:', 'ФИО'),
+              GetRowText.getText('Ученик:', 'ФИО'),
+              GetRowText.getText('Ученик:', 'ФИО'),
             ],
           ),
         ),

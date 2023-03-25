@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ExpansionTileWidget extends StatefulWidget {
-  const ExpansionTileWidget({Key? key}) : super(key: key);
+class StudyTheme extends StatefulWidget {
+  const StudyTheme({Key? key}) : super(key: key);
 
   @override
-  State<ExpansionTileWidget> createState() => _ExpansionTileState();
+  State<StudyTheme> createState() => _StudyThemeState();
 }
 
-class _ExpansionTileState extends State<ExpansionTileWidget> {
+class _StudyThemeState extends State<StudyTheme> {
   var _PSV = ['ПСВ'];
   final _pomoshBrata = ['+1', '-1', '+2', '-2', '+3', '-3', '+4', '-4'];
   final _pomoshDruga = [

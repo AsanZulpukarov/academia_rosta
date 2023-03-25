@@ -1,12 +1,12 @@
 import 'package:academi_rost/ThemeThisApp.dart';
 import 'package:academi_rost/pages/auth_pages.dart';
 import 'package:academi_rost/pages/splash_screen.dart';
-import 'package:academi_rost/pages/student_pages/user_profil_screen.dart';
+import 'package:academi_rost/pages/student_pages/student_profil_screen.dart';
 import 'package:academi_rost/pages/teacher_pages/teacher_profil_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'pages/ButtonNavigationBar.dart';
+import 'pages/button_navigation_bar.dart';
 
 void main() => runApp(const SignIn());
 

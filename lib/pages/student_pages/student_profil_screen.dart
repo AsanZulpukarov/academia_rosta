@@ -2,6 +2,8 @@ import 'package:academi_rost/ThemeThisApp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../widgets/get_row_text_widget.dart';
+
 class StudentProfileScreen extends StatelessWidget {
   final Map<String, String> _userInfo = {
     'ФИО:': '{user.lastName} {user.firstName} {user.fatherName}',
@@ -12,28 +14,6 @@ class StudentProfileScreen extends StatelessWidget {
   };
 
   StudentProfileScreen({super.key});
-
-  Row getRowText(String text1, String text2) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 1,
-          child: Text(
-            text1,
-            style: ThemeThisApp.styleTextHeader,
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Text(
-            text2,
-            style: ThemeThisApp.styleTextBase,
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +50,7 @@ class StudentProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(26.0),
                 child: Column(
                   children: _userInfo.entries.map((entry) {
-                    return getRowText(entry.key, entry.value);
+                    return GetRowText.getText(entry.key, entry.value);
                   }).toList(),
                 ),
               ),
@@ -82,7 +62,9 @@ class StudentProfileScreen extends StatelessWidget {
                     backgroundColor: MaterialStatePropertyAll<Color>(
                         ThemeThisApp.fillButton),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/auth');
+                  },
                   child: const Text(
                     "Выйти",
                     style: ThemeThisApp.styleTextButton,
