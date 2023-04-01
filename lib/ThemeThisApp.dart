@@ -9,17 +9,14 @@ class ThemeThisApp {
       ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(fillButton));
   static const styleTextButton =
       TextStyle(color: textInButtonColor, fontWeight: FontWeight.bold);
-  static var styleTextBase =
-      TextStyle(color: ThemeThisApp.fillButton, fontSize: 14.sp);
+  static var styleTextBase = TextStyle(color: fillButton, fontSize: 14.sp);
   static var styleTextHeader = TextStyle(
-      color: ThemeThisApp.fillButton,
-      fontWeight: FontWeight.bold,
-      fontSize: 16.sp);
+      color: fillButton, fontWeight: FontWeight.bold, fontSize: 16.sp);
   static var borderTextField = OutlineInputBorder(
-    borderSide: BorderSide(color: borderColor, width: 2.0.w),
+    borderSide: BorderSide(color: borderColor, width: 1.0.w),
     borderRadius: BorderRadius.circular(20.0.r),
   );
   static var borderDecoration = BoxDecoration(
-      border: Border.all(color: ThemeThisApp.borderColor, width: 2.0.w),
+      border: Border.all(color: borderColor, width: 2.0.w),
       borderRadius: BorderRadius.circular(20.0.sp));
 }

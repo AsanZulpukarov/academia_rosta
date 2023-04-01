@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:academi_rost/model/entity/user_entity_json.dart';
+import 'package:academi_rost/model/enum/role_user_enum.dart';
 import 'package:academi_rost/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,23 +20,23 @@ class FormRegister extends StatefulWidget {
 class _FormRegisterState extends State<FormRegister> {
   final _formKey = GlobalKey<FormState>();
 
-  final username = TextEditingController();
-  final password = TextEditingController();
+  final _userNameController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _focusUsername = FocusNode();
   final _focusPassword = FocusNode();
   bool _hidePass = true;
-  String? role = '';
+  bool _rememberMe = true;
+  RoleUser role = RoleUser.teacher;
   bool isSelectRole = true;
-  bool rememberMe = false;
 
-  // UserLoginPassword newUser = UserLoginPassword();
+  UserEntity userEntity = UserEntity();
 
   @override
   void dispose() {
     _focusUsername.dispose();
     _focusPassword.dispose();
-    username.dispose();
-    password.dispose();
+    _userNameController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -55,22 +57,15 @@ class _FormRegisterState extends State<FormRegister> {
       child: Column(
         children: [
           TextFormField(
-            autofocus: true,
             focusNode: _focusUsername,
             onFieldSubmitted: (_) {
               _focusUsername.nextFocus();
             },
             textInputAction: TextInputAction.next,
             style: ThemeThisApp.styleTextBase,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return '';
-              }
-              return value;
-            },
-            controller: username,
+            validator: _validateName,
+            controller: _userNameController,
             decoration: InputDecoration(
-              isCollapsed: true,
               contentPadding: EdgeInsets.all(12.0.sp),
               labelText: 'Логин',
               labelStyle: ThemeThisApp.styleTextBase,
@@ -86,12 +81,16 @@ class _FormRegisterState extends State<FormRegister> {
                   color: ThemeThisApp.borderColor,
                 ),
                 onPressed: () {
-                  username.clear();
+                  _userNameController.clear();
                 },
               ),
-              border: ThemeThisApp.borderTextField,
-              // onSaved: (value) => newUser.userName = value!,
+              enabledBorder: ThemeThisApp.borderTextField,
+              focusedBorder: ThemeThisApp.borderTextField,
+              errorBorder: ThemeThisApp.borderTextField,
             ),
+            onSaved: (value) {
+              userEntity.username = value!.toLowerCase();
+            },
           ),
           SizedBox(
             height: 10.h,
@@ -107,12 +106,11 @@ class _FormRegisterState extends State<FormRegister> {
               if (value == null || value.isEmpty) {
                 return '';
               }
-              return value;
+              return null;
             },
-            controller: password,
+            controller: _passwordController,
             obscureText: _hidePass,
             decoration: InputDecoration(
-              isCollapsed: true,
               contentPadding: EdgeInsets.all(12.0.sp),
               labelText: 'Пароль',
               labelStyle: ThemeThisApp.styleTextBase,
@@ -133,13 +131,26 @@ class _FormRegisterState extends State<FormRegister> {
                   });
                 },
               ),
-              border: ThemeThisApp.borderTextField,
+              enabledBorder: ThemeThisApp.borderTextField,
+              focusedBorder: ThemeThisApp.borderTextField,
+              errorBorder: ThemeThisApp.borderTextField,
             ),
-            // onSaved: (value) => newUser.password = value!,
+            onSaved: (value) => userEntity.password = value!,
           ),
         ],
       ),
     );
+  }
+
+  String? _validateName(String? value) {
+    final nameExp = RegExp(r'^[A-Za-z ]+$');
+    if (value == null) {
+      return 'Name is reqired.';
+    } else if (!nameExp.hasMatch(value)) {
+      return 'Please enter alphabetical characters.';
+    } else {
+      return null;
+    }
   }
 
   Widget _getRadioButton() {
@@ -152,11 +163,11 @@ class _FormRegisterState extends State<FormRegister> {
             children: [
               Radio(
                 activeColor: ThemeThisApp.borderColor,
-                value: "teacher",
+                value: RoleUser.teacher,
                 groupValue: role,
                 onChanged: (value) {
                   setState(() {
-                    role = value.toString();
+                    role = value!;
                   });
                 },
               ),
@@ -173,11 +184,11 @@ class _FormRegisterState extends State<FormRegister> {
             children: [
               Radio(
                 activeColor: ThemeThisApp.borderColor,
-                value: "student",
+                value: RoleUser.student,
                 groupValue: role,
                 onChanged: (value) {
                   setState(() {
-                    role = value.toString();
+                    role = value!;
                   });
                 },
               ),
@@ -205,11 +216,11 @@ class _FormRegisterState extends State<FormRegister> {
         ),
         Checkbox(
           activeColor: ThemeThisApp.borderColor,
-          value: rememberMe,
+          value: _rememberMe,
           onChanged: (value) {
             setState(
               () {
-                rememberMe = value!;
+                _rememberMe = value!;
               },
             );
           },
@@ -228,6 +239,7 @@ class _FormRegisterState extends State<FormRegister> {
         centerTitle: true,
       ),
       body: Form(
+        key: _formKey,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -252,18 +264,11 @@ class _FormRegisterState extends State<FormRegister> {
               ElevatedButton(
                 style: ThemeThisApp.styleButton,
                 onPressed: () {
-                  setState(() {
-                    // if (_formKey.currentState!.validate()) {
-                    //   // loadData(newUser.userName, newUser.password);
-                    //   // If the form is valid, display a snackbar. In the real world,
-                    //   // you'd often call a server or save the information in a database.
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     const SnackBar(content: Text('Processing Data')),
-                    //   );
-                    // }
-                    SplashScreen.register = true;
-                  });
-                  Navigator.pushReplacementNamed(context, '/main_page');
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    loadData();
+                    SplashScreen.register = _rememberMe;
+                  }
                 },
                 child: const Text("Войти"),
               ),
@@ -274,19 +279,38 @@ class _FormRegisterState extends State<FormRegister> {
     );
   }
 
-  Future<void> loadData(String username, String password) async {
+  Future<void> loadData() async {
     var client = http.Client();
-    var url = Uri.http('192.168.202.234:8080', '/api/auth/signIn');
-    var json = {'username': username, 'password': password};
+    var url = Uri.http('localhost:8080', '/api/auth/signIn');
     var response = await client.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(json));
+        body: jsonEncode(userEntity.toJson()));
     if (response.statusCode == 200) {
-      print('Number of books about http: ${response.body}.');
+      print(response.body);
+      Navigator.pushReplacementNamed(context, '/main_page');
+    } else if (response.statusCode == 401) {
+      _showMessage(message: 'Не правильный логин или пароль');
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
+  }
+
+  void _showMessage({required String message}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.red,
+        content: Text(
+          message,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 18.0,
+          ),
+        ),
+      ),
+    );
   }
 }

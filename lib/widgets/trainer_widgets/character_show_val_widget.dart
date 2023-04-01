@@ -17,7 +17,7 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
     "Количество переменных": 1.00
   };
   Widget _rowTextAndIcon(String text, double num) {
-    var icon_size = 18.sp;
+    var iconSize = 18.sp;
     return SizedBox(
       width: 276.w,
       height: 32.h,
@@ -33,11 +33,12 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
           Row(
             children: [
               IconButton(
-                iconSize: icon_size,
+                iconSize: iconSize,
                 tooltip: 'Уменьшить',
                 onPressed: () {
+                  if (_characterTrainer[text]! - num < 0.2) return;
                   setState(() {
-                    num -= 1.00;
+                    _characterTrainer[text] = _characterTrainer[text]! - num;
                   });
                 },
                 icon: const Icon(
@@ -50,17 +51,19 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
                 width: 26.w,
                 alignment: Alignment.center,
                 child: Text(
-                  "$num",
+                  text == 'Скорость'
+                      ? _characterTrainer[text]!.toStringAsFixed(2)
+                      : _characterTrainer[text]!.toStringAsFixed(0),
                   style: const TextStyle(color: ThemeThisApp.fillButton),
                 ),
               ),
               IconButton(
-                iconSize: icon_size,
+                iconSize: iconSize,
                 tooltip: 'Увеличить',
                 splashRadius: 12.r,
                 onPressed: () {
                   setState(() {
-                    num += 1.00;
+                    _characterTrainer[text] = _characterTrainer[text]! + num;
                   });
                 },
                 icon: const Icon(
@@ -83,7 +86,8 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
           width: 276.w,
           child: Column(
               children: _characterTrainer.entries.map((entry) {
-            return _rowTextAndIcon(entry.key, entry.value);
+            return _rowTextAndIcon(
+                entry.key, entry.key == "Скорость" ? 0.20 : 1);
           }).toList()),
         ),
       ],

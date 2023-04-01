@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
-  static bool register = false;
+  static bool register = true;
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
               style: TextStyle(
                   fontSize: 36.sp,
                   fontWeight: FontWeight.w800,
-                  color: ThemeThisApp.borderColor),
+                  color: ThemeThisApp.textInButtonColor),
             ),
           )
         ],

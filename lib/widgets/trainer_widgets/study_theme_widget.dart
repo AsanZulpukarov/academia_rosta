@@ -1,3 +1,4 @@
+import 'package:academi_rost/ThemeThisApp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,7 +10,8 @@ class StudyTheme extends StatefulWidget {
 }
 
 class _StudyThemeState extends State<StudyTheme> {
-  var _PSV = ['ПСВ'];
+  // ignore: non_constant_identifier_names
+  final _PSV = ['ПСВ'];
   final _pomoshBrata = ['+1', '-1', '+2', '-2', '+3', '-3', '+4', '-4'];
   final _pomoshDruga = [
     '+1',
@@ -32,37 +34,50 @@ class _StudyThemeState extends State<StudyTheme> {
     '-9'
   ];
 
-  Widget _widgetExpansionTile() {
-    var selectedCountry;
-    return DropdownButtonFormField(
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          icon: Icon(Icons.map),
-          labelText: 'ПСВ'),
-      items: _pomoshDruga.map((country) {
-        return DropdownMenuItem(
-          value: country,
-          child: Text(country),
-        );
-      }).toList(),
-      onChanged: (country) {
-        setState(() {
-          selectedCountry = country as String;
-        });
-      },
-      value: selectedCountry,
+  Widget _widgetExpansionTile(List<String> theme, String nameTheme) {
+    // ignore: prefer_typing_uninitialized_variables
+    var selectedTheme;
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: DropdownButtonFormField(
+        menuMaxHeight: 300.sp,
+        borderRadius: ThemeThisApp.borderTextField.borderRadius,
+        decoration: InputDecoration(
+          labelText: nameTheme,
+          labelStyle: ThemeThisApp.styleTextHeader,
+          enabledBorder: ThemeThisApp.borderTextField,
+          focusedBorder: ThemeThisApp.borderTextField,
+          errorBorder: ThemeThisApp.borderTextField,
+          hoverColor: null,
+        ),
+        items: theme.map((country) {
+          return DropdownMenuItem(
+            value: country,
+            child: Text(
+              country,
+              style: ThemeThisApp.styleTextBase,
+            ),
+          );
+        }).toList(),
+        onChanged: (country) {
+          setState(() {
+            selectedTheme = country as String;
+          });
+        },
+        value: selectedTheme,
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 276.w,
+      width: 200.w,
       child: Column(
         children: [
-          _widgetExpansionTile(),
-          _widgetExpansionTile(),
-          _widgetExpansionTile(),
+          _widgetExpansionTile(_PSV, 'Простое Сложение Вычитание'),
+          _widgetExpansionTile(_pomoshBrata, 'Помощь брата'),
+          _widgetExpansionTile(_pomoshDruga, 'Помощь друга'),
         ],
       ),
     );

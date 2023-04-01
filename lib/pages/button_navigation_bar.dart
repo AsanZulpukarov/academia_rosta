@@ -1,6 +1,5 @@
-import 'package:academi_rost/pages/student_pages/static_screen.dart';
 import 'package:academi_rost/pages/student_pages/timetable_student_screen.dart';
-import 'package:academi_rost/pages/teacher_pages/groups_pages.dart';
+import 'package:academi_rost/pages/teacher_pages/search_page.dart';
 import 'package:academi_rost/pages/trainer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,13 +13,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 1;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
-    TimetableStudentScreen(),
-    TrainerPage(),
-    StaticScreen(),
-  ];
 
   void _onItemTapped(int index) {
     if (_selectedIndex == index) return;
@@ -50,8 +42,13 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: const [
+          TimetableStudentScreen(),
+          TrainerPage(),
+          SearchPage(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 30.0.sp,
