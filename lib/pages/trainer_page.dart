@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../ThemeThisApp.dart';
+import '../theme_this_app.dart';
 import '../widgets/trainer_widgets/character_show_val_widget.dart';
 import '../widgets/trainer_widgets/study_theme_widget.dart';
 import '../widgets/trainer_widgets/show_random_val_widget.dart';
@@ -18,9 +18,9 @@ class _TrainerPageState extends State<TrainerPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        ShowRandomValWidget(),
-        CharacterShowValWidget(),
-        StudyTheme(),
+        const ShowRandomValWidget(),
+        const CharacterShowValWidget(),
+        const StudyTheme(),
         Container(
           alignment: Alignment.center,
           width: 102.w,

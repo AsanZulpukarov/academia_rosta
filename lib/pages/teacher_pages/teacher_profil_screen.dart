@@ -1,28 +1,26 @@
-import 'package:academi_rost/ThemeThisApp.dart';
+import 'package:academi_rost/theme_this_app.dart';
+import 'package:academi_rost/model/entity/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../widgets/get_row_text_widget.dart';
 
 class TeacherProfileScreen extends StatelessWidget {
-  final Map<String, String> _userInfo = {
-    'ФИО:': '{user.lastName} {user.firstName} {user.fatherName}',
-    'Возраст:': '{user.age}',
-    'Логин:': '{user.userLoginPassword.userName}',
-    'Номер тел:': '{user.phone_number}',
-    'Дата поступления на работу': '{user.enrollmentDate}',
-    'Адрес:': '{user.address}',
-  };
-
-  TeacherProfileScreen({super.key});
+  UserInfo user;
+  TeacherProfileScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, String> userInfo = {
+      'ФИО:': '${user.lastname} ${user.firstname}',
+      'Возраст:': '${user.age}',
+      'Логин:': '${user.username}',
+    };
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Container(
-          width: 175.w,
+          width: 175,
           padding: EdgeInsets.all(10.0.sp),
           child: Image.asset(
             'assets/logo/logo_WB.png',
@@ -30,26 +28,23 @@ class TeacherProfileScreen extends StatelessWidget {
         ),
         actions: [
           TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Назад',
-                style: TextStyle(
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.bold,
-                    color: ThemeThisApp.textInButtonColor),
-              ))
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Назад',
+              style: ThemeThisApp.styleTextButton,
+            ),
+          ),
         ],
       ),
       body: ListView(
         children: [
           SizedBox(
-            height: 70.h,
+            height: 40.h,
           ),
           Container(
             width: 246.w,
-            height: 410.h,
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,13 +59,13 @@ class TeacherProfileScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(26.0),
                   child: Column(
-                    children: _userInfo.entries.map((entry) {
+                    children: userInfo.entries.map((entry) {
                       return GetRowText.getText(entry.key, entry.value);
                     }).toList(),
                   ),
                 ),
                 SizedBox(
-                  height: 70.h,
+                  height: 20.h,
                 ),
                 ElevatedButton(
                     style: const ButtonStyle(

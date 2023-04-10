@@ -1,4 +1,5 @@
-import 'package:academi_rost/ThemeThisApp.dart';
+import 'package:academi_rost/theme_this_app.dart';
+import 'package:academi_rost/model/entity/user_info.dart';
 import 'package:academi_rost/pages/auth_pages.dart';
 import 'package:academi_rost/pages/splash_screen.dart';
 import 'package:academi_rost/pages/student_pages/student_profil_screen.dart';
@@ -12,6 +13,7 @@ void main() => runApp(const SignIn());
 
 class SignIn extends StatelessWidget {
   const SignIn({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -33,8 +35,18 @@ class SignIn extends StatelessWidget {
             '/splash_screen': (context) => const SplashScreen(),
             '/auth': (context) => const FormRegister(),
             '/main_page': (context) => const MainPage(),
-            '/user_profile': (context) => StudentProfileScreen(),
-            '/teacher_profile': (context) => TeacherProfileScreen(),
+            '/student_profile': (context) {
+              UserInfo user =
+                  ModalRoute.of(context)?.settings.arguments as UserInfo;
+              return StudentProfileScreen(
+                userInfo: user,
+              );
+            },
+            '/teacher_profile': (context) {
+              UserInfo user =
+                  ModalRoute.of(context)?.settings.arguments as UserInfo;
+              return TeacherProfileScreen(user: user);
+            },
           },
           initialRoute: '/splash_screen',
         );

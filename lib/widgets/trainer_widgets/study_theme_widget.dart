@@ -1,6 +1,7 @@
-import 'package:academi_rost/ThemeThisApp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../theme_this_app.dart';
 
 class StudyTheme extends StatefulWidget {
   const StudyTheme({Key? key}) : super(key: key);
@@ -40,6 +41,7 @@ class _StudyThemeState extends State<StudyTheme> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: DropdownButtonFormField(
+        iconEnabledColor: ThemeThisApp.fillButton,
         menuMaxHeight: 300.sp,
         borderRadius: ThemeThisApp.borderTextField.borderRadius,
         decoration: InputDecoration(
@@ -50,11 +52,11 @@ class _StudyThemeState extends State<StudyTheme> {
           errorBorder: ThemeThisApp.borderTextField,
           hoverColor: null,
         ),
-        items: theme.map((country) {
+        items: theme.map((theme) {
           return DropdownMenuItem(
-            value: country,
+            value: theme,
             child: Text(
-              country,
+              theme,
               style: ThemeThisApp.styleTextBase,
             ),
           );

@@ -1,13 +1,9 @@
-class UserEntity {
+import '../enum/role_user_enum.dart';
+
+class UserRequestModel {
   String? username;
   String? password;
-
-  UserEntity({this.username, this.password});
-
-  UserEntity.fromJson(Map<String, dynamic> json) {
-    username = json['username'];
-    password = json['password'];
-  }
+  UserRequestModel({this.username, this.password});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

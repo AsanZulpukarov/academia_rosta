@@ -1,27 +1,24 @@
-import 'dart:convert';
-
+import 'package:academi_rost/api_service/auth_api.dart';
 import 'package:academi_rost/model/entity/user_entity_json.dart';
 import 'package:academi_rost/model/enum/role_user_enum.dart';
-import 'package:academi_rost/pages/splash_screen.dart';
+import 'package:academi_rost/model/static_variable/StaticVariable.dart';
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../ThemeThisApp.dart';
+import '../theme_this_app.dart';
 
 class FormRegister extends StatefulWidget {
   const FormRegister({Key? key}) : super(key: key);
-
   @override
   State<FormRegister> createState() => _FormRegisterState();
 }
 
 class _FormRegisterState extends State<FormRegister> {
   final _formKey = GlobalKey<FormState>();
-
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _ipController = TextEditingController(text: '192.168.43.24:8080');
   final _focusUsername = FocusNode();
   final _focusPassword = FocusNode();
   bool _hidePass = true;
@@ -29,7 +26,8 @@ class _FormRegisterState extends State<FormRegister> {
   RoleUser role = RoleUser.teacher;
   bool isSelectRole = true;
 
-  UserEntity userEntity = UserEntity();
+  UserRequestModel userRequestModel = UserRequestModel();
+  final AuthApiHttp authApiHttp = AuthApiHttp();
 
   @override
   void dispose() {
@@ -89,7 +87,7 @@ class _FormRegisterState extends State<FormRegister> {
               errorBorder: ThemeThisApp.borderTextField,
             ),
             onSaved: (value) {
-              userEntity.username = value!.toLowerCase();
+              userRequestModel.username = value!.toLowerCase();
             },
           ),
           SizedBox(
@@ -135,7 +133,7 @@ class _FormRegisterState extends State<FormRegister> {
               focusedBorder: ThemeThisApp.borderTextField,
               errorBorder: ThemeThisApp.borderTextField,
             ),
-            onSaved: (value) => userEntity.password = value!,
+            onSaved: (value) => userRequestModel.password = value!,
           ),
         ],
       ),
@@ -151,56 +149,6 @@ class _FormRegisterState extends State<FormRegister> {
     } else {
       return null;
     }
-  }
-
-  Widget _getRadioButton() {
-    return Container(
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            children: [
-              Radio(
-                activeColor: ThemeThisApp.borderColor,
-                value: RoleUser.teacher,
-                groupValue: role,
-                onChanged: (value) {
-                  setState(() {
-                    role = value!;
-                  });
-                },
-              ),
-              const Text(
-                "Учитель",
-                style: TextStyle(color: ThemeThisApp.fillButton),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 26.w,
-          ),
-          Row(
-            children: [
-              Radio(
-                activeColor: ThemeThisApp.borderColor,
-                value: RoleUser.student,
-                groupValue: role,
-                onChanged: (value) {
-                  setState(() {
-                    role = value!;
-                  });
-                },
-              ),
-              const Text(
-                "Ученик",
-                style: TextStyle(color: ThemeThisApp.fillButton),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 
   Widget _getRowCheckBox() {
@@ -244,16 +192,15 @@ class _FormRegisterState extends State<FormRegister> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              SizedBox(
+                height: 20.h,
+              ),
               _getImageLogo(),
               // SizedBox()
               SizedBox(
                 height: 68.h,
               ),
               _getTextField(),
-              SizedBox(
-                height: 11.h,
-              ),
-              _getRadioButton(),
               SizedBox(
                 height: 50.h,
               ),
@@ -266,35 +213,31 @@ class _FormRegisterState extends State<FormRegister> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    loadData();
-                    SplashScreen.register = _rememberMe;
+                    if (authApiHttp.loadData(userRequestModel, _rememberMe) ==
+                        'успешно') {
+                      Navigator.pushReplacementNamed(context, '/main_page');
+                    }
+                    _showMessage(
+                        message: authApiHttp.loadData(
+                            userRequestModel, _rememberMe) as String);
                   }
                 },
                 child: const Text("Войти"),
+              ),
+              TextField(
+                controller: _ipController,
+                onChanged: (value) {
+                  StaticVariable.urlIp = value;
+                },
+                onSubmitted: (value) {
+                  StaticVariable.urlIp = value;
+                },
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<void> loadData() async {
-    var client = http.Client();
-    var url = Uri.http('localhost:8080', '/api/auth/signIn');
-    var response = await client.post(url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(userEntity.toJson()));
-    if (response.statusCode == 200) {
-      print(response.body);
-      Navigator.pushReplacementNamed(context, '/main_page');
-    } else if (response.statusCode == 401) {
-      _showMessage(message: 'Не правильный логин или пароль');
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-    }
   }
 
   void _showMessage({required String message}) {

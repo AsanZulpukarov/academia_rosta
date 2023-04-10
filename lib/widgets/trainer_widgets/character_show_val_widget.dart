@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../ThemeThisApp.dart';
+import '../../theme_this_app.dart';
 
 class CharacterShowValWidget extends StatefulWidget {
   const CharacterShowValWidget({Key? key}) : super(key: key);

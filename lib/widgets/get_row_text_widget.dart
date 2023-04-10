@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../ThemeThisApp.dart';
+import '../theme_this_app.dart';
 
 class GetRowText {
   static Row getText(String text1, String text2) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           flex: 1,

@@ -1,4 +1,5 @@
-import 'package:academi_rost/ThemeThisApp.dart';
+import 'package:academi_rost/theme_this_app.dart';
+import 'package:academi_rost/model/entity/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,7 +14,9 @@ class StudentProfileScreen extends StatelessWidget {
     'Адрес:': '{user.address}',
   };
 
-  StudentProfileScreen({super.key});
+  UserInfo userInfo;
+
+  StudentProfileScreen({super.key, required this.userInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class StudentProfileScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Container(
-          width: 175.w,
+          width: 175,
           padding: EdgeInsets.all(10.0.sp),
           child: Image.asset(
             'assets/logo/logo_WB.png',

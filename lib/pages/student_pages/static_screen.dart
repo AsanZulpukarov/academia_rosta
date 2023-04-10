@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../ThemeThisApp.dart';
+import '../../theme_this_app.dart';
 import '../../widgets/get_row_text_widget.dart';
 
 class CalendarWidget {
@@ -159,7 +159,7 @@ class _StaticScreenState extends State<StaticScreen> {
         SizedBox(
           height: 36.h,
           child: _getHeaderText(
-              "${CalendarWidget.monthsName.elementAt(calendar.nowDay.month)} -${calendar.nowDay.year}"),
+              "${CalendarWidget.monthsName.elementAt(calendar.nowDay.month - 1)} - ${calendar.nowDay.year}"),
         ),
         Container(
           // width: 340.w,
