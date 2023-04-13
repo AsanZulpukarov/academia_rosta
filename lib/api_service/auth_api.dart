@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:academi_rost/model/entity/user_entity_json.dart';
-import 'package:academi_rost/model/entity/user_response_model.dart';
-import 'package:flutter/material.dart';
+import 'package:academia_rost/model/entity/user_request_model.dart';
 import 'package:http/http.dart' as http;
 
-import '../model/static_variable/StaticVariable.dart';
+import '../model/static_variable/static_variable.dart';
 
 class AuthApiHttp {
-  Future<String> loadData(
+  late String text;
+  Future<void> loadData(
       UserRequestModel userRequestModel, bool remember) async {
     var client = http.Client();
     var url = Uri.http(StaticVariable.urlIp, '/api/auth/signIn');
@@ -18,14 +17,14 @@ class AuthApiHttp {
         },
         body: jsonEncode(userRequestModel..toJson()));
     if (response.statusCode == 200) {
+      text = 'Успешно';
       final parsed = jsonDecode(response.body) as Map<String, dynamic>;
-      StaticVariable.userResponseModel?.fromJson(parsed);
-      StaticVariable.userResponseModel?.register = remember;
-      return 'Успешно';
+      StaticVariable.userResponseModel.fromJson(parsed);
+      StaticVariable.userResponseModel.register = remember;
     } else if (response.statusCode == 401) {
-      return 'Не правильный логин или пароль';
+      text = 'Не правильный логин или пароль';
     } else {
-      return 'Request failed with status: ${response.statusCode}.';
+      text = 'Request failed with status: ${response.statusCode}.';
     }
   }
 }

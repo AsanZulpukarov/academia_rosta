@@ -1,7 +1,7 @@
-import 'package:academi_rost/api_service/auth_api.dart';
-import 'package:academi_rost/model/entity/user_entity_json.dart';
-import 'package:academi_rost/model/enum/role_user_enum.dart';
-import 'package:academi_rost/model/static_variable/StaticVariable.dart';
+import 'package:academia_rost/api_service/auth_api.dart';
+import 'package:academia_rost/model/entity/user_request_model.dart';
+import 'package:academia_rost/model/enum/role_user_enum.dart';
+import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -210,16 +210,15 @@ class _FormRegisterState extends State<FormRegister> {
               ),
               ElevatedButton(
                 style: ThemeThisApp.styleButton,
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    if (authApiHttp.loadData(userRequestModel, _rememberMe) ==
-                        'успешно') {
+                    await authApiHttp.loadData(userRequestModel, _rememberMe);
+                    var text = authApiHttp.text;
+                    if (text.toLowerCase() == 'успешно'.toLowerCase()) {
                       Navigator.pushReplacementNamed(context, '/main_page');
                     }
-                    _showMessage(
-                        message: authApiHttp.loadData(
-                            userRequestModel, _rememberMe) as String);
+                    _showMessage(message: text);
                   }
                 },
                 child: const Text("Войти"),
@@ -244,7 +243,9 @@ class _FormRegisterState extends State<FormRegister> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
+        backgroundColor: message.toLowerCase() == 'успешно'.toLowerCase()
+            ? Colors.green
+            : Colors.red,
         content: Text(
           message,
           style: const TextStyle(

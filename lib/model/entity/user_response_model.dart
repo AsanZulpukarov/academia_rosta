@@ -6,14 +6,16 @@ class UserResponseModel {
 
   bool register = false;
 
+  UserResponseModel();
+
   UserResponseModel.fromJson(Map<String, dynamic> json) {
-    token = json['token'];
+    token = json['token'] as String;
     roleUser =
         json['role'] == "ROLE_PUPIL" ? RoleUser.student : RoleUser.teacher;
   }
 
   void fromJson(Map<String, dynamic> json) {
-    token = json['token'];
+    token = json['token'] as String;
     roleUser =
         json['role'] == "ROLE_PUPIL" ? RoleUser.student : RoleUser.teacher;
   }

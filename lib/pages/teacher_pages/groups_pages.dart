@@ -1,4 +1,4 @@
-import 'package:academi_rost/theme_this_app.dart';
+import 'package:academia_rost/theme_this_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

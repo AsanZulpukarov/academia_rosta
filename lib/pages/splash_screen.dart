@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:academi_rost/model/static_variable/StaticVariable.dart';
-import 'package:academi_rost/theme_this_app.dart';
+import 'package:academia_rost/theme_this_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../model/static_variable/static_variable.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
         const Duration(seconds: 2),
         () => Navigator.pushReplacementNamed(
             context,
-            StaticVariable.userResponseModel!.register
+            StaticVariable.userResponseModel.register
                 ? '/main_page'
                 : '/auth'));
   }

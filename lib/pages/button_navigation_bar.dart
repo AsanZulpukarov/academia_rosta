@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:academi_rost/model/entity/user_info.dart';
-import 'package:academi_rost/model/static_variable/StaticVariable.dart';
-import 'package:academi_rost/pages/auth_pages.dart';
-import 'package:academi_rost/pages/student_pages/static_screen.dart';
-import 'package:academi_rost/pages/student_pages/timetable_student_screen.dart';
-import 'package:academi_rost/pages/teacher_pages/groups_pages.dart';
-import 'package:academi_rost/pages/teacher_pages/search_page.dart';
-import 'package:academi_rost/pages/trainer_page.dart';
+import 'package:academia_rost/model/entity/user_info.dart';
+import 'package:academia_rost/model/static_variable/static_variable.dart';
+import 'package:academia_rost/pages/student_pages/static_screen.dart';
+import 'package:academia_rost/pages/student_pages/timetable_student_screen.dart';
+import 'package:academia_rost/pages/teacher_pages/groups_pages.dart';
+import 'package:academia_rost/pages/teacher_pages/search_page.dart';
+import 'package:academia_rost/pages/trainer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -35,7 +34,7 @@ class _MainPageState extends State<MainPage> {
     SearchPage(),
   ];
   int _selectedIndex = 1;
-  bool role = StaticVariable.userResponseModel?.roleUser == RoleUser.student;
+  bool role = StaticVariable.userResponseModel.roleUser == RoleUser.student;
 
   void _onItemTapped(int index) {
     if (_selectedIndex == index) return;
@@ -58,7 +57,7 @@ class _MainPageState extends State<MainPage> {
     var response = await client.get(url, headers: <String, String>{
       'Content-Type': 'application/json',
       HttpHeaders.authorizationHeader:
-          StaticVariable.userResponseModel?.token as String,
+          StaticVariable.userResponseModel.token as String,
     });
     if (response.statusCode == 200) {
       print(response.body);

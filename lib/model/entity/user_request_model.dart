@@ -1,5 +1,3 @@
-import '../enum/role_user_enum.dart';
-
 class UserRequestModel {
   String? username;
   String? password;

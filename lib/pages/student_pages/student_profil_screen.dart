@@ -1,22 +1,20 @@
-import 'package:academi_rost/theme_this_app.dart';
-import 'package:academi_rost/model/entity/user_info.dart';
+import 'package:academia_rost/theme_this_app.dart';
+import 'package:academia_rost/model/entity/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../widgets/get_row_text_widget.dart';
 
 class StudentProfileScreen extends StatelessWidget {
-  final Map<String, String> _userInfo = {
-    'ФИО:': '{user.lastName} {user.firstName} {user.fatherName}',
-    'Возраст:': '{user.age}',
-    'Логин:': '{user.userLoginPassword.userName}',
-    'Номер тел:': '{user.phone_number}',
-    'Адрес:': '{user.address}',
-  };
-
-  UserInfo userInfo;
-
-  StudentProfileScreen({super.key, required this.userInfo});
+  final UserInfo user;
+  late final Map<String, String> _userInfo;
+  StudentProfileScreen({super.key, required this.user}) {
+    _userInfo = {
+      'ФИО:': '${user.lastname} ${user.firstname}',
+      'Возраст:': '${user.age}',
+      'Логин:': '${user.username}',
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
