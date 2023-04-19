@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../service/trainer_service.dart';
+
 class ShowRandomValWidget extends StatefulWidget {
   const ShowRandomValWidget({Key? key}) : super(key: key);
 
@@ -11,6 +13,14 @@ class ShowRandomValWidget extends StatefulWidget {
 }
 
 class ShowRandomValWidgetState extends State<ShowRandomValWidget> {
+  TrainerService trainerService = TrainerService();
+  // List<int> output = trainerService.getArray('dada', 3, 3);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

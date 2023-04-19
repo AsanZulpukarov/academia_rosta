@@ -1,11 +1,10 @@
-import 'package:academia_rost/api_service/auth_api.dart';
-import 'package:academia_rost/model/entity/user_request_model.dart';
-import 'package:academia_rost/model/enum/role_user_enum.dart';
+import 'package:academia_rost/model/entity/user_auth_entity.dart';
 import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../service/api_service/auth_api.dart';
 import '../theme_this_app.dart';
 
 class FormRegister extends StatefulWidget {
@@ -18,15 +17,15 @@ class _FormRegisterState extends State<FormRegister> {
   final _formKey = GlobalKey<FormState>();
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _ipController = TextEditingController(text: '192.168.43.24:8080');
+  final _ipController = TextEditingController(text: StaticVariable.urlIp);
   final _focusUsername = FocusNode();
   final _focusPassword = FocusNode();
   bool _hidePass = true;
   bool _rememberMe = true;
-  RoleUser role = RoleUser.teacher;
-  bool isSelectRole = true;
 
-  UserRequestModel userRequestModel = UserRequestModel();
+  String text = "";
+
+  UserAuthEntity userAuthEntity = UserAuthEntity();
   final AuthApiHttp authApiHttp = AuthApiHttp();
 
   @override
@@ -87,7 +86,7 @@ class _FormRegisterState extends State<FormRegister> {
               errorBorder: ThemeThisApp.borderTextField,
             ),
             onSaved: (value) {
-              userRequestModel.username = value!.toLowerCase();
+              userAuthEntity.username = value!.trim();
             },
           ),
           SizedBox(
@@ -133,7 +132,7 @@ class _FormRegisterState extends State<FormRegister> {
               focusedBorder: ThemeThisApp.borderTextField,
               errorBorder: ThemeThisApp.borderTextField,
             ),
-            onSaved: (value) => userRequestModel.password = value!,
+            onSaved: (value) => userAuthEntity.password = value!.trim(),
           ),
         ],
       ),
@@ -141,11 +140,8 @@ class _FormRegisterState extends State<FormRegister> {
   }
 
   String? _validateName(String? value) {
-    final nameExp = RegExp(r'^[A-Za-z ]+$');
     if (value == null) {
-      return 'Name is reqired.';
-    } else if (!nameExp.hasMatch(value)) {
-      return 'Please enter alphabetical characters.';
+      return 'Логин бош болбошуу керек.';
     } else {
       return null;
     }
@@ -213,8 +209,7 @@ class _FormRegisterState extends State<FormRegister> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await authApiHttp.loadData(userRequestModel, _rememberMe);
-                    var text = authApiHttp.text;
+                    text = await requestUser();
                     if (text.toLowerCase() == 'успешно'.toLowerCase()) {
                       Navigator.pushReplacementNamed(context, '/main_page');
                     }
@@ -229,7 +224,7 @@ class _FormRegisterState extends State<FormRegister> {
                   StaticVariable.urlIp = value;
                 },
                 onSubmitted: (value) {
-                  StaticVariable.urlIp = value;
+                  StaticVariable.urlIp = value.trim();
                 },
               ),
             ],
@@ -237,6 +232,10 @@ class _FormRegisterState extends State<FormRegister> {
         ),
       ),
     );
+  }
+
+  Future<String> requestUser() async {
+    return await authApiHttp.loadData(userAuthEntity, _rememberMe);
   }
 
   void _showMessage({required String message}) {

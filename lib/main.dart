@@ -9,7 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'pages/button_navigation_bar.dart';
 
-void main() => runApp(const SignIn());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const SignIn());
+}
 
 class SignIn extends StatelessWidget {
   const SignIn({Key? key}) : super(key: key);

@@ -1,3 +1,4 @@
+import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:academia_rost/theme_this_app.dart';
 import 'package:academia_rost/model/entity/user_info.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +71,7 @@ class StudentProfileScreen extends StatelessWidget {
                           ThemeThisApp.fillButton),
                     ),
                     onPressed: () {
+                      StaticVariable.userLoginEntity.deleteAllData();
                       Navigator.pushNamedAndRemoveUntil(
                           context, '/auth', (Route<dynamic> route) => false);
                     },

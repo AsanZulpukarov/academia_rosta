@@ -3,6 +3,7 @@ import 'package:academia_rost/model/entity/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../model/static_variable/static_variable.dart';
 import '../../widgets/get_row_text_widget.dart';
 
 class TeacherProfileScreen extends StatelessWidget {
@@ -75,6 +76,7 @@ class TeacherProfileScreen extends StatelessWidget {
                           ThemeThisApp.fillButton),
                     ),
                     onPressed: () {
+                      StaticVariable.userLoginEntity.deleteAllData();
                       Navigator.pushNamedAndRemoveUntil(
                           context, '/auth', (Route<dynamic> route) => false);
                     },

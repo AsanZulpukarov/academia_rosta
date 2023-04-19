@@ -61,9 +61,9 @@ class _StudyThemeState extends State<StudyTheme> {
             ),
           );
         }).toList(),
-        onChanged: (country) {
+        onChanged: (select) {
           setState(() {
-            selectedTheme = country as String;
+            selectedTheme = select as String;
           });
         },
         value: selectedTheme,

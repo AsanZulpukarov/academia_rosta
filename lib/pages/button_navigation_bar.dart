@@ -11,9 +11,9 @@ import 'package:academia_rost/pages/trainer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../model/enum/role_user_enum.dart';
-
 import 'package:http/http.dart' as http;
+
+import '../model/enum/role_user_enum.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -34,8 +34,10 @@ class _MainPageState extends State<MainPage> {
     SearchPage(),
   ];
   int _selectedIndex = 1;
-  bool role = StaticVariable.userResponseModel.roleUser == RoleUser.student;
-
+  bool role = StaticVariable.userLoginEntity.roleUser ==
+          StaticVariable.roleUser[RoleUser.student]
+      ? true
+      : false;
   void _onItemTapped(int index) {
     if (_selectedIndex == index) return;
     setState(() {
@@ -57,16 +59,13 @@ class _MainPageState extends State<MainPage> {
     var response = await client.get(url, headers: <String, String>{
       'Content-Type': 'application/json',
       HttpHeaders.authorizationHeader:
-          StaticVariable.userResponseModel.token as String,
+          StaticVariable.userLoginEntity.token ?? "",
     });
     if (response.statusCode == 200) {
       print(response.body);
       parseUserBody(response.body);
-      // parseUserBody(response.body);
-      // Navigator.pushReplacementNamed(context, '/main_page');
     } else if (response.statusCode == 401) {
-      print('error + ${response.statusCode}');
-      // _showMessage(message: 'Не правильный логин или пароль');
+      Navigator.pushNamedAndRemoveUntil(context, "/auth", (route) => false);
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }

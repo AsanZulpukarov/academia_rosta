@@ -16,14 +16,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    StaticVariable.userLoginEntity.getAllData();
     super.initState();
     Timer(
         const Duration(seconds: 2),
-        () => Navigator.pushReplacementNamed(
-            context,
-            StaticVariable.userResponseModel.register
-                ? '/main_page'
-                : '/auth'));
+        () => Navigator.pushReplacementNamed(context,
+            StaticVariable.userLoginEntity.register ? '/main_page' : '/auth'));
   }
 
   @override
