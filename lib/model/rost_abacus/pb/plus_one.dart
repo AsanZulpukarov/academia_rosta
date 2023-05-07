@@ -1,6 +1,6 @@
 import 'package:academia_rost/model/rost_abacus/generatable.dart';
 
-class PlusOne with Generatable {
+class PBPlusOne with Generatable {
   @override
   int head(int sum) {
     int probab;

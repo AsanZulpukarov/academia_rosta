@@ -91,11 +91,8 @@ class _MainPageState extends State<MainPage> {
           IconButton(
             iconSize: 30.sp,
             onPressed: () {
-              role
-                  ? Navigator.pushNamed(context, '/student_profile',
-                      arguments: userInfo)
-                  : Navigator.pushNamed(context, '/teacher_profile',
-                      arguments: userInfo);
+              Navigator.pushNamed(context, '/user_profile_info',
+                  arguments: userInfo);
             },
             icon: const Icon(Icons.person),
           ),

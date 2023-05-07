@@ -53,14 +53,20 @@ class _SearchPageState extends State<SearchPage> {
           padding: EdgeInsets.only(top: 77.h),
           itemCount: _filteredStudent.length,
           itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: ThemeThisApp.borderDecoration,
-              child: Column(
-                children: [
-                  Text(_filteredStudent.elementAt(index).name),
-                  Text('${_filteredStudent.elementAt(index).age}'),
-                ],
+            return TapRegion(
+              onTapInside: (_) {
+                // Navigator.pushNamed(context, "/teacher/search_student",arguments: students[index]);
+              },
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: ThemeThisApp.borderDecoration,
+                child: Column(
+                  children: [
+                    Text(_filteredStudent.elementAt(index).name),
+                    Text('${_filteredStudent.elementAt(index).age}'),
+                  ],
+                ),
               ),
             );
           },

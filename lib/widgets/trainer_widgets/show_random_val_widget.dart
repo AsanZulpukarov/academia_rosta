@@ -1,4 +1,5 @@
 import 'package:academia_rost/theme_this_app.dart';
+import 'package:academia_rost/widgets/trainer_widgets/random_val_character_and_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,16 +7,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../service/trainer_service.dart';
 
 class ShowRandomValWidget extends StatefulWidget {
-  const ShowRandomValWidget({Key? key}) : super(key: key);
+  ShowRandomValWidget({Key? key}) : super(key: key);
+  TrainerService trainerService = TrainerService();
+  RandomValCharacterAndTheme characterAndTheme = RandomValCharacterAndTheme();
+  late List<int> output;
+  getRandomArray() {
+    output = trainerService.getArray('psv', 2, 5);
+  }
 
   @override
   State<ShowRandomValWidget> createState() => ShowRandomValWidgetState();
 }
 
 class ShowRandomValWidgetState extends State<ShowRandomValWidget> {
-  TrainerService trainerService = TrainerService();
-  // List<int> output = trainerService.getArray('dada', 3, 3);
-
   @override
   void initState() {
     super.initState();

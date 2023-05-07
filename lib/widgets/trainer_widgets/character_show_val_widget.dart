@@ -4,18 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../theme_this_app.dart';
 
 class CharacterShowValWidget extends StatefulWidget {
-  const CharacterShowValWidget({Key? key}) : super(key: key);
-
+  CharacterShowValWidget({Key? key}) : super(key: key);
+  final Map<String, double> characterTrainer = {
+    "Скорость": 1.00,
+    "Разрядность": 1.00,
+    "Количество переменных": 1.00
+  };
   @override
   State<CharacterShowValWidget> createState() => CharacterShowValWidgetState();
 }
 
 class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
-  final Map<String, double> _characterTrainer = {
-    "Скорость": 1.00,
-    "Разрядность": 1.00,
-    "Количество переменных": 1.00
-  };
   Widget _rowTextAndIcon(String text, double num) {
     var iconSize = 18.sp;
     return SizedBox(
@@ -36,9 +35,10 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
                 iconSize: iconSize,
                 tooltip: 'Уменьшить',
                 onPressed: () {
-                  if (_characterTrainer[text]! - num < 0.2) return;
+                  if (widget.characterTrainer[text]! - num < 0.2) return;
                   setState(() {
-                    _characterTrainer[text] = _characterTrainer[text]! - num;
+                    widget.characterTrainer[text] =
+                        widget.characterTrainer[text]! - num;
                   });
                 },
                 icon: const Icon(
@@ -52,8 +52,8 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
                 alignment: Alignment.center,
                 child: Text(
                   text == 'Скорость'
-                      ? _characterTrainer[text]!.toStringAsFixed(2)
-                      : _characterTrainer[text]!.toStringAsFixed(0),
+                      ? widget.characterTrainer[text]!.toStringAsFixed(2)
+                      : widget.characterTrainer[text]!.toStringAsFixed(0),
                   style: const TextStyle(color: ThemeThisApp.fillButton),
                 ),
               ),
@@ -63,7 +63,8 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
                 splashRadius: 12.r,
                 onPressed: () {
                   setState(() {
-                    _characterTrainer[text] = _characterTrainer[text]! + num;
+                    widget.characterTrainer[text] =
+                        widget.characterTrainer[text]! + num;
                   });
                 },
                 icon: const Icon(
@@ -85,7 +86,7 @@ class CharacterShowValWidgetState extends State<CharacterShowValWidget> {
         SizedBox(
           width: 276.w,
           child: Column(
-              children: _characterTrainer.entries.map((entry) {
+              children: widget.characterTrainer.entries.map((entry) {
             return _rowTextAndIcon(
                 entry.key, entry.key == "Скорость" ? 0.20 : 1);
           }).toList()),

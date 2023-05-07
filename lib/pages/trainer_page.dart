@@ -1,3 +1,4 @@
+import 'package:academia_rost/widgets/trainer_widgets/random_val_character_and_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,13 +15,20 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
+  bool isStart = false;
+
+  RandomValCharacterAndTheme characterAndTheme = RandomValCharacterAndTheme();
+  ShowRandomValWidget showRandomValWidget = ShowRandomValWidget();
+  CharacterShowValWidget characterShowValWidget = CharacterShowValWidget();
+  StudyTheme studyTheme = StudyTheme();
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        const ShowRandomValWidget(),
-        const CharacterShowValWidget(),
-        const StudyTheme(),
+        showRandomValWidget,
+        characterShowValWidget,
+        studyTheme,
         Container(
           alignment: Alignment.center,
           width: 102.w,
@@ -30,9 +38,16 @@ class _TrainerPageState extends State<TrainerPage> {
               backgroundColor:
                   MaterialStatePropertyAll<Color>(ThemeThisApp.fillButton),
             ),
-            onPressed: () {},
-            child: const Text(
-              "Начать",
+            onPressed: () {
+              List<dynamic> characterTr =
+                  characterShowValWidget.characterTrainer.values.toList();
+              characterAndTheme.timer = characterTr[0];
+              characterAndTheme.digit = characterTr[1];
+              characterAndTheme.count = characterTr[2];
+              characterAndTheme.theme = studyTheme.selectThemeName;
+            },
+            child: Text(
+              isStart ? "Начать" : "Проверить",
               style: ThemeThisApp.styleTextButton,
             ),
           ),
