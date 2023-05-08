@@ -2,6 +2,8 @@ import 'package:academia_rost/theme_this_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../model/static_variable/static_variable.dart';
+
 class Student {
   late String name;
   late int age;
@@ -48,29 +50,41 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        ListView.builder(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          padding: EdgeInsets.only(top: 77.h),
-          itemCount: _filteredStudent.length,
-          itemBuilder: (context, index) {
-            return TapRegion(
-              onTapInside: (_) {
-                // Navigator.pushNamed(context, "/teacher/search_student",arguments: students[index]);
-              },
-              child: Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: ThemeThisApp.borderDecoration,
-                child: Column(
-                  children: [
-                    Text(_filteredStudent.elementAt(index).name),
-                    Text('${_filteredStudent.elementAt(index).age}'),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
+        FutureBuilder(
+            future: null,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  padding: EdgeInsets.only(top: 77.h),
+                  itemCount: _filteredStudent.length,
+                  itemBuilder: (context, index) {
+                    return TapRegion(
+                      onTapInside: (_) {
+                        // Navigator.pushNamed(context, "/teacher/search_student",arguments: students[index]);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        decoration: ThemeThisApp.borderDecoration,
+                        child: Column(
+                          children: [
+                            Text(_filteredStudent.elementAt(index).name),
+                            Text('${_filteredStudent.elementAt(index).age}'),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text(StaticVariable.errorFuture),
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            }),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: TextField(

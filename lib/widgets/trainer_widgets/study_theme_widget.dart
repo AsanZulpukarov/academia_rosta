@@ -6,6 +6,7 @@ import '../../theme_this_app.dart';
 class StudyTheme extends StatefulWidget {
   StudyTheme({Key? key}) : super(key: key);
   late String selectThemeName;
+
   @override
   State<StudyTheme> createState() => _StudyThemeState();
 }
@@ -110,12 +111,14 @@ class _StudyThemeState extends State<StudyTheme> {
               );
             }).toList(),
             onChanged: (select) {
-              setState(() {
-                psv = select as String;
-                setSelectTheme("psv${psv!}");
-                pb = null;
-                pd = null;
-              });
+              if (select != null && select != "") {
+                setState(() {
+                  psv = select;
+                  setSelectTheme("psv${psv!}");
+                  pb = null;
+                  pd = null;
+                });
+              }
             },
             value: psv,
           ),
@@ -143,12 +146,14 @@ class _StudyThemeState extends State<StudyTheme> {
               );
             }).toList(),
             onChanged: (select) {
-              setState(() {
-                pb = select as String;
-                setSelectTheme("pb${pb!}");
-                psv = null;
-                pd = null;
-              });
+              if (select != null && select != "") {
+                setState(() {
+                  pb = select;
+                  setSelectTheme("pb${pb!}");
+                  psv = null;
+                  pd = null;
+                });
+              }
             },
             value: pb,
           ),
@@ -176,12 +181,14 @@ class _StudyThemeState extends State<StudyTheme> {
               );
             }).toList(),
             onChanged: (select) {
-              setState(() {
-                pd = select as String;
-                setSelectTheme("pb${pd!}");
-                psv = null;
-                pb = null;
-              });
+              if (select != null && select != "") {
+                setState(() {
+                  pd = select;
+                  setSelectTheme("pb${pd!}");
+                  psv = null;
+                  pb = null;
+                });
+              }
             },
             value: pd,
           ),

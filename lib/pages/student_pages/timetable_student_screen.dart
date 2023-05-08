@@ -2,6 +2,7 @@ import 'package:academia_rost/theme_this_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../model/static_variable/static_variable.dart';
 import '../../widgets/get_row_text_widget.dart';
 
 class TimetableStudentScreen extends StatelessWidget {
@@ -9,11 +10,21 @@ class TimetableStudentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> courses = ['Math', 'Fiz', 'Bio', 'Bil'];
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: courses.length,
-        itemBuilder: (context, index) {
-          return _getExpansionTile(courses[index]);
+    return FutureBuilder(
+        future: null,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                itemCount: courses.length,
+                itemBuilder: (context, index) {
+                  return _getExpansionTile(courses[index]);
+                });
+          } else if (snapshot.hasError) {
+            return const Center(child: Text(StaticVariable.errorFuture));
+          }
+
+          return const Center(child: CircularProgressIndicator());
         });
   }
 

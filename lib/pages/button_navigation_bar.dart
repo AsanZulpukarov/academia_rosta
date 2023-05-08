@@ -1,17 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:academia_rost/model/entity/user_info.dart';
 import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:academia_rost/pages/student_pages/static_screen.dart';
 import 'package:academia_rost/pages/student_pages/timetable_student_screen.dart';
-import 'package:academia_rost/pages/teacher_pages/groups_pages.dart';
+import 'package:academia_rost/pages/teacher_pages/my_groups/groups_screen.dart';
 import 'package:academia_rost/pages/teacher_pages/search_page.dart';
 import 'package:academia_rost/pages/trainer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:http/http.dart' as http;
 
 import '../model/enum/role_user_enum.dart';
 
@@ -28,8 +23,8 @@ class _MainPageState extends State<MainPage> {
     TrainerPage(),
     StaticScreen()
   ];
-  List<Widget> teacherPage = const [
-    GroupsPages(),
+  List<Widget> teacherPage = [
+    GroupsScreen(),
     TrainerPage(),
     SearchPage(),
   ];
@@ -47,35 +42,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    loadUserDate();
     super.initState();
   }
 
   UserInfo? userInfo;
-
-  Future<void> loadUserDate() async {
-    var client = http.Client();
-    var url = Uri.http(StaticVariable.urlIp, '/api/user/');
-    var response = await client.get(url, headers: <String, String>{
-      'Content-Type': 'application/json',
-      HttpHeaders.authorizationHeader:
-          StaticVariable.userLoginEntity.token ?? "",
-    });
-    if (response.statusCode == 200) {
-      print(response.body);
-      parseUserBody(response.body);
-    } else if (response.statusCode == 401) {
-      Navigator.pushNamedAndRemoveUntil(context, "/auth", (route) => false);
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-    }
-  }
-
-  void parseUserBody(String responseBody) {
-    final parsed = jsonDecode(responseBody) as Map<String, dynamic>;
-    userInfo = UserInfo.fromJson(parsed);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +61,7 @@ class _MainPageState extends State<MainPage> {
           IconButton(
             iconSize: 30.sp,
             onPressed: () {
-              Navigator.pushNamed(context, '/user_profile_info',
-                  arguments: userInfo);
+              Navigator.pushNamed(context, '/user_profile_info');
             },
             icon: const Icon(Icons.person),
           ),

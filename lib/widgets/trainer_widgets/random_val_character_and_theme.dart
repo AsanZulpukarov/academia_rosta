@@ -1,8 +1,6 @@
-import 'package:academia_rost/model/rost_abacus/generatable.dart';
-
 class RandomValCharacterAndTheme {
-  String? theme;
-  double? timer;
-  int? digit;
-  int? count;
+  String themeName = "";
+  double timer = 1.00;
+  int digit = 1;
+  int count = 1;
 }

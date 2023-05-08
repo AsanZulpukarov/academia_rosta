@@ -1,8 +1,7 @@
+import 'package:academia_rost/pages/profile_pages/profile_screen.dart';
 import 'package:academia_rost/theme_this_app.dart';
-import 'package:academia_rost/model/entity/user_info.dart';
 import 'package:academia_rost/pages/auth_pages.dart';
 import 'package:academia_rost/pages/splash_screen.dart';
-import 'package:academia_rost/pages/profil_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -38,12 +37,10 @@ class SignIn extends StatelessWidget {
             '/auth': (context) => const FormRegister(),
             '/main_page': (context) => const MainPage(),
             '/user_profile_info': (context) {
-              UserInfo user =
-                  ModalRoute.of(context)?.settings.arguments as UserInfo;
-              return ProfileInfoWidget(user: user);
+              return ProfileScreen();
             },
             '/teacher/search_student': (context) {
-              return ProfileInfoWidget(user: UserInfo());
+              return ProfileScreen();
             }
           },
           initialRoute: '/splash_screen',

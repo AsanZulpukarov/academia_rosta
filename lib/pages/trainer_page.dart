@@ -16,11 +16,16 @@ class TrainerPage extends StatefulWidget {
 
 class _TrainerPageState extends State<TrainerPage> {
   bool isStart = false;
-
   RandomValCharacterAndTheme characterAndTheme = RandomValCharacterAndTheme();
   ShowRandomValWidget showRandomValWidget = ShowRandomValWidget();
   CharacterShowValWidget characterShowValWidget = CharacterShowValWidget();
   StudyTheme studyTheme = StudyTheme();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +47,14 @@ class _TrainerPageState extends State<TrainerPage> {
               List<dynamic> characterTr =
                   characterShowValWidget.characterTrainer.values.toList();
               characterAndTheme.timer = characterTr[0];
-              characterAndTheme.digit = characterTr[1];
-              characterAndTheme.count = characterTr[2];
-              characterAndTheme.theme = studyTheme.selectThemeName;
+              characterAndTheme.digit = characterTr[1].round();
+              characterAndTheme.count = characterTr[2].round();
+              characterAndTheme.themeName = studyTheme.selectThemeName;
+              showRandomValWidget.getRandomArray(characterAndTheme);
+              setState(() {});
             },
-            child: Text(
-              isStart ? "Начать" : "Проверить",
+            child: const Text(
+              "Начать",
               style: ThemeThisApp.styleTextButton,
             ),
           ),

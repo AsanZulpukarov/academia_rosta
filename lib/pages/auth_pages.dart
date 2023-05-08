@@ -26,7 +26,6 @@ class _FormRegisterState extends State<FormRegister> {
   String text = "";
 
   UserAuthEntity userAuthEntity = UserAuthEntity();
-  final AuthApiHttp authApiHttp = AuthApiHttp();
 
   @override
   void dispose() {
@@ -235,7 +234,7 @@ class _FormRegisterState extends State<FormRegister> {
   }
 
   Future<String> requestUser() async {
-    return await authApiHttp.loadData(userAuthEntity, _rememberMe);
+    return await ApiUserHttp().singIn(userAuthEntity, _rememberMe);
   }
 
   void _showMessage({required String message}) {

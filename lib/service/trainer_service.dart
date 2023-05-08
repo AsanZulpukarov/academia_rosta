@@ -44,7 +44,7 @@ class TrainerService {
         number += currentNum;
       }
     }
-    responseArray[count] = number;
+    responseArray.add(number);
     return responseArray;
   }
 
