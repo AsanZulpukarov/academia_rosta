@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../model/entity/user_info.dart';
 import '../../model/static_variable/static_variable.dart';
-import '../../service/api_service/auth_api.dart';
+import '../../service/api_service/api_client.dart';
 import '../../widgets/get_row_text_widget.dart';
 
 class UserInfoFuture extends StatefulWidget {
@@ -21,7 +21,7 @@ class _UserInfoFutureState extends State<UserInfoFuture> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    userInfoFuture = ApiUserHttp().loadUserInfo();
+    userInfoFuture = ApiClientHttp().loadUserInfo();
   }
 
   @override

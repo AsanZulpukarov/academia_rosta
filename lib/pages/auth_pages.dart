@@ -1,10 +1,10 @@
 import 'package:academia_rost/model/entity/user_auth_entity.dart';
 import 'package:academia_rost/model/static_variable/static_variable.dart';
+import 'package:academia_rost/service/api_service/api_client.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../service/api_service/auth_api.dart';
 import '../theme_this_app.dart';
 
 class FormRegister extends StatefulWidget {
@@ -237,7 +237,7 @@ class _FormRegisterState extends State<FormRegister> {
   }
 
   Future<String> requestUser() async {
-    return await ApiUserHttp().singIn(userAuthEntity, _rememberMe);
+    return await ApiClientHttp().singIn(userAuthEntity, _rememberMe);
   }
 
   void _showMessage({required String message}) {

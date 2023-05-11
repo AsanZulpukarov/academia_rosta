@@ -1,4 +1,6 @@
+import 'package:academia_rost/model/entity/teacher_entity/group_entity.dart';
 import 'package:academia_rost/pages/profile_pages/profile_screen.dart';
+import 'package:academia_rost/pages/teacher_pages/select_group_page/select_group_info_screen.dart';
 import 'package:academia_rost/theme_this_app.dart';
 import 'package:academia_rost/pages/auth_pages.dart';
 import 'package:academia_rost/pages/splash_screen.dart';
@@ -49,6 +51,11 @@ class SignIn extends StatelessWidget {
                   ?.settings
                   .arguments as RandomValCharacterAndTheme;
               return ShowRandomValWidget(val);
+            },
+            '/teacher/groups/selectGroup': (context) {
+              GroupEntity group =
+                  ModalRoute.of(context)?.settings.arguments as GroupEntity;
+              return SelectGroupInfoScreen(group);
             }
           },
           initialRoute: '/splash_screen',

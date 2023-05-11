@@ -1,5 +1,6 @@
-import 'package:academia_rost/model/entity/student_entity/subject_entity.dart';
 import 'package:academia_rost/model/entity/student_entity/timetable_entity.dart';
+
+import '../subject_entity.dart';
 
 class StudentGroupEntity {
   int? id;

@@ -2,7 +2,7 @@ import 'package:academia_rost/model/entity/user_info.dart';
 import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:academia_rost/pages/student_pages/static_screen.dart';
 import 'package:academia_rost/pages/student_pages/timetable_student_screen.dart';
-import 'package:academia_rost/pages/teacher_pages/my_groups/groups_screen.dart';
+import 'package:academia_rost/pages/teacher_pages/my_groups_widget/groups_screen.dart';
 import 'package:academia_rost/pages/teacher_pages/search_page.dart';
 import 'package:academia_rost/pages/trainer_page.dart';
 import 'package:flutter/material.dart';

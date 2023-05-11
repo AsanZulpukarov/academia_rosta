@@ -15,15 +15,18 @@ class MyGroupsWidget extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         itemCount: courses?.length,
         itemBuilder: (context, index) {
-          return _getExpansionTile(courses?.elementAt(index), index);
+          return _getExpansionTile(context, courses?.elementAt(index));
         });
   }
 
-  Widget _getExpansionTile(GroupEntity? nameCourse, int index) {
+  Widget _getExpansionTile(BuildContext context, GroupEntity? nameCourse) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, "/teacher/groups/selectGroup",
+              arguments: nameCourse);
+        },
         child: Container(
           padding: EdgeInsets.all(16.0),
           width: 300.w,

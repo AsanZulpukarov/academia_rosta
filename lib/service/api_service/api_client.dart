@@ -1,16 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:academia_rost/model/entity/student_entity/mark_entites/mark_with_day_entity.dart';
 import 'package:academia_rost/model/entity/teacher_entity/group_entity.dart';
 import 'package:academia_rost/model/entity/user_auth_entity.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../../model/entity/student_entity/mark_entites/mark_with_topic_entity.dart';
 import '../../model/entity/user_info.dart';
 import '../../model/static_variable/static_variable.dart';
 
-class ApiUserHttp {
+class ApiClientHttp {
+  UserAuthEntity? user;
   Future<String> singIn(UserAuthEntity userAuthEntity, bool remember) async {
+    user = userAuthEntity;
     String text;
     var client = http.Client();
     var url = Uri.http(StaticVariable.urlIp, '/api/auth/signIn');
@@ -55,6 +59,7 @@ class ApiUserHttp {
   Future<List<GroupEntity>?> loadTeacherGroups() async {
     var client = http.Client();
     var url = Uri.http(StaticVariable.urlIp, '/api/group/');
+    print(url);
     var response = await client.get(url, headers: <String, String>{
       'Content-Type': 'application/json',
       HttpHeaders.authorizationHeader:
@@ -66,6 +71,48 @@ class ApiUserHttp {
       List<GroupEntity> mygr =
           myGroups.map((json) => GroupEntity.fromJson(json)).toList();
       return mygr;
+    } else {
+      print(StaticVariable.userLoginEntity.token);
+      print(response.statusCode);
+      return null;
+    }
+  }
+
+  Future<List<MarkWithDayEntity>?> loadMarkWithDay() async {
+    var client = http.Client();
+    var url = Uri.http(StaticVariable.urlIp, '/api/mark/${user?.username}');
+    var response = await client.get(url, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      HttpHeaders.authorizationHeader:
+          StaticVariable.userLoginEntity.token ?? "",
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.body);
+      List<dynamic> markJson = jsonDecode(response.body) as List;
+      List<MarkWithDayEntity> mark =
+          markJson.map((json) => MarkWithDayEntity.fromJson(json)).toList();
+      return mark;
+    } else {
+      print(response.statusCode);
+      return null;
+    }
+  }
+
+  Future<List<MarkWithTopicEntity>?> loadMarkWithTopic() async {
+    var client = http.Client();
+    var url =
+        Uri.http(StaticVariable.urlIp, '/api/mark/${user?.username}/byTopics');
+    var response = await client.get(url, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      HttpHeaders.authorizationHeader:
+          StaticVariable.userLoginEntity.token ?? "",
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.body);
+      List<dynamic> markJson = jsonDecode(response.body) as List;
+      List<MarkWithTopicEntity> mark =
+          markJson.map((json) => MarkWithTopicEntity.fromJson(json)).toList();
+      return mark;
     } else {
       print(response.statusCode);
       return null;

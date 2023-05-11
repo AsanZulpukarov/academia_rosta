@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../theme_this_app.dart';
 import '../widgets/trainer_widgets/character_show_val_widget.dart';
 import '../widgets/trainer_widgets/study_theme_widget.dart';
-import '../widgets/trainer_widgets/show_random_val_widget.dart';
 
 class TrainerPage extends StatefulWidget {
   const TrainerPage({Key? key}) : super(key: key);

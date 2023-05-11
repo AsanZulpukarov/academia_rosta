@@ -1,6 +1,6 @@
 import 'package:academia_rost/model/static_variable/static_variable.dart';
-import 'package:academia_rost/pages/teacher_pages/my_groups/my_groups_widget.dart';
-import 'package:academia_rost/service/api_service/auth_api.dart';
+import 'package:academia_rost/pages/teacher_pages/my_groups_widget/my_groups_widget.dart';
+import 'package:academia_rost/service/api_service/api_client.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/entity/teacher_entity/group_entity.dart';
@@ -19,7 +19,11 @@ class _GroupsScreenState extends State<GroupsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    groupsFuture = ApiUserHttp().loadTeacherGroups();
+    setGroupsFuture();
+  }
+
+  setGroupsFuture() {
+    groupsFuture = ApiClientHttp().loadTeacherGroups();
   }
 
   @override
@@ -32,6 +36,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
               courses: snapshot.data,
             );
           } else if (snapshot.hasError) {
+            print(snapshot.error);
             return const Center(child: Text(StaticVariable.errorFuture));
           }
 

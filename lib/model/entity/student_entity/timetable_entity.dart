@@ -8,6 +8,7 @@ class TimetableEntity {
   String? sunday;
   String? saturday;
 
+  Map<int, String>? checkNullWeekDays;
   TimetableEntity(this.id,
       {this.monday,
       this.tuesday,
@@ -15,7 +16,9 @@ class TimetableEntity {
       this.thursday,
       this.friday,
       this.sunday,
-      this.saturday});
+      this.saturday}) {
+    getNonNullWeekDay();
+  }
 
   TimetableEntity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -26,6 +29,7 @@ class TimetableEntity {
     friday = json['friday'];
     sunday = json['sunday'];
     saturday = json['saturday'];
+    getNonNullWeekDay();
   }
 
   Map<String, dynamic> toJson() {
@@ -39,5 +43,15 @@ class TimetableEntity {
     data['sunday'] = sunday;
     data['saturday'] = saturday;
     return data;
+  }
+
+  getNonNullWeekDay() {
+    if (monday != null) checkNullWeekDays![1] = monday!;
+    if (tuesday != null) checkNullWeekDays![2] = tuesday!;
+    if (wednesday != null) checkNullWeekDays![3] = wednesday!;
+    if (thursday != null) checkNullWeekDays![4] = thursday!;
+    if (friday != null) checkNullWeekDays![5] = friday!;
+    if (sunday != null) checkNullWeekDays![6] = sunday!;
+    if (saturday != null) checkNullWeekDays![7] = saturday!;
   }
 }

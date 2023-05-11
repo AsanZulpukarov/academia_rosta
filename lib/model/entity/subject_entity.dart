@@ -1,11 +1,11 @@
-class Subject {
-  Null? id;
+class SubjectEntity {
+  int? id;
   String? name;
   int? cost;
 
-  Subject({this.id, this.name, this.cost});
+  SubjectEntity({this.id, this.name, this.cost});
 
-  Subject.fromJson(Map<String, dynamic> json) {
+  SubjectEntity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     cost = json['cost'];
