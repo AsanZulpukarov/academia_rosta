@@ -10,24 +10,26 @@ import '../../model/entity/user_info.dart';
 import '../../model/static_variable/static_variable.dart';
 
 class ApiUserHttp {
-
   Future<String> singIn(UserAuthEntity userAuthEntity, bool remember) async {
     String text;
     var client = http.Client();
     var url = Uri.http(StaticVariable.urlIp, '/api/auth/signIn');
+
+    print("${userAuthEntity.username} ${userAuthEntity.password}");
+    print(url);
     var response = await client.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(userAuthEntity.toJson()));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       final parsed = jsonDecode(response.body) as Map<String, dynamic>;
       StaticVariable.userLoginEntity.fromJson(parsed, remember);
       text = 'Успешно';
     } else if (response.statusCode == 401) {
       text = 'Не правильный логин или пароль';
     } else {
-      text = 'Request failed with status: ${response.statusCode}.';
+      text = 'Ошибка статуса: ${response.statusCode}.';
     }
     client.close();
     return text;

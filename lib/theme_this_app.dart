@@ -7,6 +7,9 @@ class ThemeThisApp {
   static const Color fillButton = Color(0xff105BAB);
   static const styleButton =
       ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(fillButton));
+  static const styleDisableButton = ButtonStyle(
+      backgroundColor: MaterialStatePropertyAll<Color>(Colors.black12));
+
   static const styleTextButton =
       TextStyle(color: textInButtonColor, fontWeight: FontWeight.bold);
   static var styleTextBase = TextStyle(color: fillButton, fontSize: 14.sp);

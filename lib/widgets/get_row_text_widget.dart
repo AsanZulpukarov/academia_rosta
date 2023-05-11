@@ -15,7 +15,7 @@ class GetRowText {
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 1,
           child: Text(
             text2,
             style: ThemeThisApp.styleTextBase,

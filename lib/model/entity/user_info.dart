@@ -4,6 +4,8 @@ class UserInfo {
   String? lastname;
   String? username;
   int? age;
+  String? phoneNumber;
+  String? address;
   String? role;
 
   UserInfo(
@@ -12,15 +14,19 @@ class UserInfo {
       this.lastname,
       this.username,
       this.age,
+      this.phoneNumber,
+      this.address,
       this.role});
 
   UserInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'] as int;
-    firstname = json['firstname'] as String;
-    lastname = json['lastname'] as String;
-    username = json['username'] as String;
-    age = json['age'];
-    role = json['role'] as String;
+    firstname = json['firstname'];
+    lastname = json['lastname'];
+    username = json['username'];
+    age = json['age'] as int;
+    phoneNumber = json['phoneNumber'];
+    address = json['address'];
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
@@ -30,6 +36,8 @@ class UserInfo {
     data['lastname'] = lastname;
     data['username'] = username;
     data['age'] = age;
+    data['phoneNumber'] = phoneNumber;
+    data['address'] = address;
     data['role'] = role;
     return data;
   }

@@ -2,6 +2,8 @@ import 'package:academia_rost/pages/profile_pages/profile_screen.dart';
 import 'package:academia_rost/theme_this_app.dart';
 import 'package:academia_rost/pages/auth_pages.dart';
 import 'package:academia_rost/pages/splash_screen.dart';
+import 'package:academia_rost/widgets/trainer_widgets/random_val_character_and_theme.dart';
+import 'package:academia_rost/widgets/trainer_widgets/show_random_val_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -41,6 +43,12 @@ class SignIn extends StatelessWidget {
             },
             '/teacher/search_student': (context) {
               return ProfileScreen();
+            },
+            '/trainer/showNumber': (context) {
+              RandomValCharacterAndTheme val = ModalRoute.of(context)
+                  ?.settings
+                  .arguments as RandomValCharacterAndTheme;
+              return ShowRandomValWidget(val);
             }
           },
           initialRoute: '/splash_screen',

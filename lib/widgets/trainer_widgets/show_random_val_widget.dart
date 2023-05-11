@@ -1,55 +1,46 @@
 import 'dart:async';
 
-import 'package:academia_rost/theme_this_app.dart';
 import 'package:academia_rost/widgets/trainer_widgets/random_val_character_and_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../service/trainer_service.dart';
+import '../../theme_this_app.dart';
 
 class ShowRandomValWidget extends StatefulWidget {
-  bool isStart = false;
-  TrainerService trainerService = TrainerService();
-  RandomValCharacterAndTheme characterAndTheme = RandomValCharacterAndTheme();
-  List<int> output = [0];
+  RandomValCharacterAndTheme characterAndTheme;
 
-  ShowRandomValWidget({super.key});
-
-  getRandomArray(RandomValCharacterAndTheme RVCAT) {
-    characterAndTheme = RVCAT;
-    output = trainerService.getArray(characterAndTheme.themeName,
-        characterAndTheme.digit, characterAndTheme.count);
-    isStart = true;
-    print(output);
-    createState();
-  }
+  ShowRandomValWidget(this.characterAndTheme, {Key? key}) : super(key: key);
 
   @override
-  State<ShowRandomValWidget> createState() {
-    return _ShowRandomValWidgetState();
-  }
+  State<ShowRandomValWidget> createState() => _ShowRandomValWidgetState();
 }
 
 class _ShowRandomValWidgetState extends State<ShowRandomValWidget> {
-  final TextEditingController _answerController = TextEditingController();
-  String answer = "";
-
+  late List<int> output;
   int currentIndex = 0;
   late Timer timer;
+  bool isPressStart = true;
+  bool isPressCheck = true;
+  bool isShowNumber = true;
 
-  bool writeAnswer = false;
   @override
   void initState() {
     super.initState();
+    output = widget.characterAndTheme.output;
+    startTimer();
+  }
+
+  startTimer() {
     timer = Timer.periodic(
         Duration(milliseconds: (widget.characterAndTheme.timer * 1000).round()),
         (timer) {
       setState(() {
-        if (currentIndex < widget.output.length - 2) {
+        if (currentIndex < output.length - 2) {
           currentIndex++;
         } else {
-          writeAnswer = true;
+          isShowNumber = false;
+          isPressCheck = false;
           timer.cancel();
         }
       });
@@ -58,99 +49,101 @@ class _ShowRandomValWidgetState extends State<ShowRandomValWidget> {
 
   @override
   void dispose() {
-    _answerController.dispose();
     super.dispose();
-
     timer.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 112.w,
-      height: 133.h,
-      child: Column(
-        children: [
-          Container(
-            width: 120.w,
-            height: 90.h,
-            alignment: Alignment.center,
-            child: Text(
-              writeAnswer
-                  ? "Напиши ответ: "
-                  : widget.output[currentIndex].toString(),
-              style: ThemeThisApp.styleTextHeader,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Container(
+          width: 175,
+          padding: EdgeInsets.all(10.0.sp),
+          child: Image.asset(
+            'assets/logo/logo_WB.png',
           ),
-          SizedBox(
-            width: 220.w,
-            height: 42.h,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 100.w,
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                  width: 300.w,
+                  height: 300.h,
+                  child: Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      isShowNumber
+                          ? currentIndex % 2 == 0
+                              ? output.elementAt(currentIndex).toString()
+                              : " ${output.elementAt(currentIndex)}"
+                          : isPressStart
+                              ? "Нажми проверить"
+                              : "Ответ ${output.last}.",
+                      style: TextStyle(
+                          color: ThemeThisApp.styleTextBase.color,
+                          fontSize: 50),
+                    ),
+                  )),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SizedBox(
+                  width: 120.w,
                   height: 40.h,
-                  child: TextField(
-                    controller: _answerController,
-                    enabled: widget.isStart,
-                    style: ThemeThisApp.styleTextBase,
-                    decoration: InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: 'Ответ',
-                        labelStyle: ThemeThisApp.styleTextBase,
-                        enabledBorder: ThemeThisApp.borderTextField,
-                        focusedBorder: ThemeThisApp.borderTextField),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 100.w,
-                  height: 40.h,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _showMessage(
-                          checkAnswer() ? "Правильно!" : "Неправильно!",
-                          widget.output!.last.toString());
-                      setState(() {});
-                    },
-                    style: ThemeThisApp.styleButton,
-                    child: const Text(
-                      "Проверить",
-                      style: ThemeThisApp.styleTextButton,
+                  child: Center(
+                    child: ElevatedButton(
+                      style: isPressCheck
+                          ? ThemeThisApp.styleDisableButton
+                          : ThemeThisApp.styleButton,
+                      onPressed: isPressCheck
+                          ? null
+                          : () {
+                              isPressCheck = true;
+                              isPressStart = false;
+                              setState(() {});
+                            },
+                      child: const Text(
+                        "Проверить",
+                        style: ThemeThisApp.styleTextButton,
+                      ),
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  bool checkAnswer() {
-    answer = _answerController.text;
-    return answer.compareTo(widget.output.last.toString()) == 0 ? true : false;
-  }
-
-  void _showMessage(String message, String trueAnswer) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: message.toLowerCase() == 'Правильно!'.toLowerCase()
-            ? Colors.green
-            : Colors.red,
-        content: Center(
-          child: Text(
-            "$message\nОтвет: $trueAnswer",
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 18.0,
-            ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SizedBox(
+                  width: 120.w,
+                  height: 40.h,
+                  child: Center(
+                    child: ElevatedButton(
+                      style: isPressStart
+                          ? ThemeThisApp.styleDisableButton
+                          : ThemeThisApp.styleButton,
+                      onPressed: isPressStart
+                          ? null
+                          : () {
+                              widget.characterAndTheme.getRandomArray();
+                              output = widget.characterAndTheme.output;
+                              isPressStart = true;
+                              isPressCheck = true;
+                              isShowNumber = true;
+                              currentIndex = 0;
+                              startTimer();
+                              setState(() {});
+                            },
+                      child: const Text(
+                        "Начать",
+                        style: ThemeThisApp.styleTextButton,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

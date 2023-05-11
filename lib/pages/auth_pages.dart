@@ -98,12 +98,7 @@ class _FormRegisterState extends State<FormRegister> {
             },
             textInputAction: TextInputAction.done,
             style: ThemeThisApp.styleTextBase,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return '';
-              }
-              return null;
-            },
+            validator: _validatePassword,
             controller: _passwordController,
             obscureText: _hidePass,
             decoration: InputDecoration(
@@ -140,7 +135,15 @@ class _FormRegisterState extends State<FormRegister> {
 
   String? _validateName(String? value) {
     if (value == null) {
-      return 'Логин бош болбошуу керек.';
+      return 'Логин не должно быть пустым.';
+    } else {
+      return null;
+    }
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null) {
+      return 'Пароль не должно быть пустым.';
     } else {
       return null;
     }

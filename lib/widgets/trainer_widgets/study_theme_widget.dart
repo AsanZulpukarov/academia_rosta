@@ -5,7 +5,7 @@ import '../../theme_this_app.dart';
 
 class StudyTheme extends StatefulWidget {
   StudyTheme({Key? key}) : super(key: key);
-  late String selectThemeName;
+  String selectThemeName = "psvПСВ";
 
   @override
   State<StudyTheme> createState() => _StudyThemeState();
@@ -49,47 +49,13 @@ class _StudyThemeState extends State<StudyTheme> {
     super.initState();
   }
 
-/*
-  Widget _widgetExpansionTile(List<String> theme, String nameTheme) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: DropdownButtonFormField(
-        iconEnabledColor: ThemeThisApp.fillButton,
-        menuMaxHeight: 300.sp,
-        borderRadius: ThemeThisApp.borderTextField.borderRadius,
-        decoration: InputDecoration(
-          labelText: nameTheme,
-          labelStyle: ThemeThisApp.styleTextHeader,
-          enabledBorder: ThemeThisApp.borderTextField,
-          focusedBorder: ThemeThisApp.borderTextField,
-          errorBorder: ThemeThisApp.borderTextField,
-        ),
-        items: theme.map((theme) {
-          return DropdownMenuItem(
-            value: theme,
-            child: Text(
-              theme,
-              style: ThemeThisApp.styleTextBase,
-            ),
-          );
-        }).toList(),
-        onChanged: (select) {
-          setState(() {
-            selectedTheme = select as String;
-          });
-        },
-        value: selectedTheme,
-      ),
-    );
-  }
-*/
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 200.w,
       child: Column(children: [
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField(
             iconEnabledColor: ThemeThisApp.fillButton,
             menuMaxHeight: 300.sp,
@@ -124,7 +90,7 @@ class _StudyThemeState extends State<StudyTheme> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField(
             iconEnabledColor: ThemeThisApp.fillButton,
             menuMaxHeight: 300.sp,
@@ -159,7 +125,7 @@ class _StudyThemeState extends State<StudyTheme> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: DropdownButtonFormField(
             iconEnabledColor: ThemeThisApp.fillButton,
             menuMaxHeight: 300.sp,

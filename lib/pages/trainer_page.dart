@@ -15,9 +15,7 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-  bool isStart = false;
   RandomValCharacterAndTheme characterAndTheme = RandomValCharacterAndTheme();
-  ShowRandomValWidget showRandomValWidget = ShowRandomValWidget();
   CharacterShowValWidget characterShowValWidget = CharacterShowValWidget();
   StudyTheme studyTheme = StudyTheme();
 
@@ -31,13 +29,22 @@ class _TrainerPageState extends State<TrainerPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        showRandomValWidget,
+        SizedBox(
+          width: 120.w,
+          height: 80.h,
+          child: const Center(
+            child: Text(
+              "Тренажер",
+              style: TextStyle(color: ThemeThisApp.fillButton, fontSize: 40),
+            ),
+          ),
+        ),
         characterShowValWidget,
         studyTheme,
         Container(
           alignment: Alignment.center,
           width: 102.w,
-          height: 32.h,
+          height: 40.h,
           child: ElevatedButton(
             style: const ButtonStyle(
               backgroundColor:
@@ -50,8 +57,12 @@ class _TrainerPageState extends State<TrainerPage> {
               characterAndTheme.digit = characterTr[1].round();
               characterAndTheme.count = characterTr[2].round();
               characterAndTheme.themeName = studyTheme.selectThemeName;
-              showRandomValWidget.getRandomArray(characterAndTheme);
-              setState(() {});
+              characterAndTheme.getRandomArray();
+              setState(() {
+                Navigator.pushNamed(context, "/trainer/showNumber",
+                    arguments: characterAndTheme);
+                // print("231123${showRandomValWidget.output}");
+              });
             },
             child: const Text(
               "Начать",
@@ -62,4 +73,11 @@ class _TrainerPageState extends State<TrainerPage> {
       ],
     );
   }
+  //
+  // ShowRandomValWidget getShowRandomValWidget() {
+  //   return characterAndTheme.isStart
+  //       ? ShowRandomValWidget.withNumbers(
+  //           characterAndTheme.output, characterAndTheme.timer)
+  //       : ShowRandomValWidget();
+  // }
 }

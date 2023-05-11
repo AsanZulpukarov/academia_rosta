@@ -39,6 +39,8 @@ class _UserInfoFutureState extends State<UserInfoFuture> {
             'ФИО:': '${user?.lastname} ${user?.firstname}',
             'Возраст:': '${user?.age}',
             'Логин:': '${user?.username}',
+            'Тел номер:': '${user?.phoneNumber}',
+            'Адрес:': '${user?.address}'
           };
           return Padding(
             padding: const EdgeInsets.all(12.0),
