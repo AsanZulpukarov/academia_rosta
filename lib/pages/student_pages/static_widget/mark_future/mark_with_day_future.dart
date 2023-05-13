@@ -1,8 +1,10 @@
 import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:academia_rost/service/api_service/api_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../model/entity/student_entity/mark_entites/mark_with_day_entity.dart';
+import '../circular_widget/circular_day_widget.dart';
 
 class MarkWithDayFuture extends StatefulWidget {
   const MarkWithDayFuture({Key? key}) : super(key: key);
@@ -26,12 +28,21 @@ class _MarkWithDayFutureState extends State<MarkWithDayFuture> {
         future: markWithDayFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data?.length,
-              itemBuilder: (context, index) {
-                return Container();
-              },
+            return SizedBox(
+              height: 180.h,
+              child: ListView.builder(
+                addAutomaticKeepAlives: false,
+                reverse: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data?.length,
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                    width: 180.w,
+                    child: ShowStaticWithDayWidget(
+                        snapshot.data?.elementAt(index) ?? MarkWithDayEntity()),
+                  );
+                },
+              ),
             );
           } else if (snapshot.hasError) {
             return const Center(

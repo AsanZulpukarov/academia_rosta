@@ -12,9 +12,7 @@ import '../../model/entity/user_info.dart';
 import '../../model/static_variable/static_variable.dart';
 
 class ApiClientHttp {
-  UserAuthEntity? user;
   Future<String> singIn(UserAuthEntity userAuthEntity, bool remember) async {
-    user = userAuthEntity;
     String text;
     var client = http.Client();
     var url = Uri.http(StaticVariable.urlIp, '/api/auth/signIn');
@@ -28,7 +26,8 @@ class ApiClientHttp {
         body: jsonEncode(userAuthEntity.toJson()));
     if (response.statusCode == 200 || response.statusCode == 201) {
       final parsed = jsonDecode(response.body) as Map<String, dynamic>;
-      StaticVariable.userLoginEntity.fromJson(parsed, remember);
+      StaticVariable.userLoginEntity
+          .fromJson(parsed, remember, userAuthEntity.username!);
       text = 'Успешно';
     } else if (response.statusCode == 401) {
       text = 'Не правильный логин или пароль';
@@ -39,7 +38,7 @@ class ApiClientHttp {
     return text;
   }
 
-  Future<UserInfo> loadUserInfo() async {
+  Future<UserInfo?> loadUserInfo() async {
     var client = http.Client();
     var url = Uri.http(StaticVariable.urlIp, '/api/user/');
     var response = await client.get(url, headers: <String, String>{
@@ -80,7 +79,9 @@ class ApiClientHttp {
 
   Future<List<MarkWithDayEntity>?> loadMarkWithDay() async {
     var client = http.Client();
-    var url = Uri.http(StaticVariable.urlIp, '/api/mark/${user?.username}');
+    var url = Uri.http(StaticVariable.urlIp,
+        '/api/mark/${StaticVariable.userLoginEntity.username}');
+    print(url);
     var response = await client.get(url, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       HttpHeaders.authorizationHeader:
@@ -100,8 +101,8 @@ class ApiClientHttp {
 
   Future<List<MarkWithTopicEntity>?> loadMarkWithTopic() async {
     var client = http.Client();
-    var url =
-        Uri.http(StaticVariable.urlIp, '/api/mark/${user?.username}/byTopics');
+    var url = Uri.http(StaticVariable.urlIp,
+        '/api/mark/${StaticVariable.userLoginEntity.username}/byTopics');
     var response = await client.get(url, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       HttpHeaders.authorizationHeader:

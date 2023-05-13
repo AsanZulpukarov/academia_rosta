@@ -1,6 +1,7 @@
 class MarkWithTopicEntity {
   int? id;
   int? correctAnswers;
+  int? wrongAnswer;
   int? totalQuestions;
   String? topic;
 
@@ -11,7 +12,9 @@ class MarkWithTopicEntity {
     id = json['id'];
     correctAnswers = json['correctAnswers'];
     totalQuestions = json['totalQuestions'];
-    topic = json['topic'];
+    topic = setTopic(json['topic']);
+
+    wrongAnswer = (totalQuestions! - correctAnswers!);
   }
 
   Map<String, dynamic> toJson() {
@@ -21,5 +24,15 @@ class MarkWithTopicEntity {
     data['totalQuestions'] = totalQuestions;
     data['topic'] = topic;
     return data;
+  }
+
+  setTopic(String? jsonTopic) {
+    if (jsonTopic == null || jsonTopic == "PSV")
+      return "Простое\nСложение\nВычитание";
+    if (jsonTopic.substring(0, 2) == "PB") {
+      return 'Помощь\nбрата\n${jsonTopic.substring(2)}';
+    } else {
+      return 'Помощь\nдруга\n${jsonTopic.substring(2)}';
+    }
   }
 }

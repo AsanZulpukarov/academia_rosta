@@ -1,6 +1,6 @@
 import 'package:academia_rost/model/entity/user_info.dart';
 import 'package:academia_rost/model/static_variable/static_variable.dart';
-import 'package:academia_rost/pages/student_pages/static_screen.dart';
+import 'package:academia_rost/pages/student_pages/static_widget/student_static_screen.dart';
 import 'package:academia_rost/pages/student_pages/timetable_student_screen.dart';
 import 'package:academia_rost/pages/teacher_pages/my_groups_widget/groups_screen.dart';
 import 'package:academia_rost/pages/teacher_pages/search_page.dart';
@@ -18,10 +18,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Widget> studentPage = const [
+  List<Widget> studentPage = [
     TimetableStudentScreen(),
     TrainerPage(),
-    StaticScreen()
+    StudentStaticScreen()
   ];
   List<Widget> teacherPage = [
     GroupsScreen(),

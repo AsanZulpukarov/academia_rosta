@@ -2,7 +2,7 @@ import '../entity/user_login_entity.dart';
 import '../enum/role_user_enum.dart';
 
 class StaticVariable {
-  static String urlIp = '192.168.241.38:2323';
+  static String urlIp = '192.168.240.103:2323';
   static UserLoginEntity userLoginEntity = UserLoginEntity();
 
   static const Map<RoleUser, String> roleUser = {

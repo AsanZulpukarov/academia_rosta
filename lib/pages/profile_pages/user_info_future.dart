@@ -13,7 +13,7 @@ class UserInfoFuture extends StatefulWidget {
 }
 
 class _UserInfoFutureState extends State<UserInfoFuture> {
-  late Future<UserInfo> userInfoFuture;
+  late Future<UserInfo?> userInfoFuture;
   late final Map<String, String> userInfo;
   ProfileInfoWidget({key}) {}
 

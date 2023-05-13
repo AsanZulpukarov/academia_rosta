@@ -4,6 +4,7 @@ abstract class _StorageServiceKey {
   static const String tokenKey = "token";
   static const String roleKey = "role";
   static const String rememberMeKey = "rememberMe";
+  static const String usernameKey = "username";
 }
 
 class StorageService {
@@ -26,6 +27,10 @@ class StorageService {
         "false";
   }
 
+  Future<String> getUsername() async {
+    return await _secureStorage.read(key: _StorageServiceKey.usernameKey) ?? "";
+  }
+
   Future<void> setToken(String token) async {
     return await _secureStorage.write(
         key: _StorageServiceKey.tokenKey, value: token);
@@ -39,5 +44,10 @@ class StorageService {
   Future<void> setRememberMe(String rememberMe) async {
     return await _secureStorage.write(
         key: _StorageServiceKey.rememberMeKey, value: rememberMe);
+  }
+
+  Future<void> setUsername(String username) async {
+    return await _secureStorage.write(
+        key: _StorageServiceKey.usernameKey, value: username);
   }
 }
