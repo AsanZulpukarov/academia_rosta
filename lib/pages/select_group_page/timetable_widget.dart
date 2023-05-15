@@ -35,8 +35,9 @@ class TimetableWidget extends StatelessWidget {
       padding: EdgeInsets.all(12.0.sp),
       child: DataTable(
         border: TableBorder.all(
-          color: ThemeThisApp.borderColor,
-        ),
+            color: ThemeThisApp.borderColor,
+            width: 2.0.w,
+            borderRadius: BorderRadius.circular(20.0)),
         columns: [
           DataColumn(
               label: Text(

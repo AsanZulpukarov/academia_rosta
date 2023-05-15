@@ -1,5 +1,5 @@
 import 'package:academia_rost/model/entity/student_entity/timetable_entity.dart';
-import 'package:academia_rost/model/entity/teacher_entity/teacher_entity.dart';
+import 'package:academia_rost/model/entity/user_info.dart';
 
 import '../subject_entity.dart';
 
@@ -7,7 +7,7 @@ class GroupEntity {
   int? id;
   String? name;
   SubjectEntity? subject;
-  Teacher? teacher;
+  UserInfo? teacher;
   TimetableEntity? timetable;
 
   GroupEntity({this.id, this.name, this.subject, this.teacher, this.timetable});
@@ -19,7 +19,7 @@ class GroupEntity {
         ? SubjectEntity.fromJson(json['subject'])
         : null;
     teacher =
-        json['teacher'] != null ? Teacher.fromJson(json['teacher']) : null;
+        json['teacher'] != null ? UserInfo.fromJson(json['teacher']) : null;
     timetable = json['timetable'];
   }
 

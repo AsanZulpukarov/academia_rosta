@@ -1,5 +1,6 @@
 import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:academia_rost/service/api_service/api_client.dart';
+import 'package:academia_rost/widgets/get_row_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,28 +29,43 @@ class _MarkWithDayFutureState extends State<MarkWithDayFuture> {
         future: markWithDayFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return SizedBox(
-              height: 180.h,
-              child: ListView.builder(
-                addAutomaticKeepAlives: false,
-                reverse: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: 180.w,
-                    child: ShowStaticWithDayWidget(
-                        snapshot.data?.elementAt(index) ?? MarkWithDayEntity()),
-                  );
-                },
-              ),
+            return Column(
+              children: [
+                SizedBox(
+                  height: 174.h,
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    trackVisibility: true,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        return SizedBox(
+                          width: 174.w,
+                          child: ShowStaticWithDayWidget(snapshot.data
+                                  ?.elementAt(
+                                      (snapshot.data?.length)! - index - 1) ??
+                              MarkWithDayEntity()),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                GetRow.getCorrectAndWrongInfo(),
+              ],
             );
           } else if (snapshot.hasError) {
-            return const Center(
-              child: Text(StaticVariable.errorFuture),
+            return SizedBox(
+              height: 60.h,
+              child: const Center(
+                child: Text(StaticVariable.errorFuture),
+              ),
             );
           }
-          return const Center(child: CircularProgressIndicator());
+          return SizedBox(
+              height: 60.h,
+              child: const Center(child: CircularProgressIndicator()));
         });
   }
 }

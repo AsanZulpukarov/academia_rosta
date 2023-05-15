@@ -18,7 +18,7 @@ class MarkWithDayEntity {
     id = json['id'];
     correctAnswers = json['correctAnswers'];
     totalQuestions = json['totalQuestions'];
-    createdDate = json['createdDate'];
+    createdDate = DateTime.parse(json['date']);
     wrongAnswer = (totalQuestions! - correctAnswers!);
   }
 
@@ -27,7 +27,7 @@ class MarkWithDayEntity {
     data['id'] = id;
     data['correctAnswers'] = correctAnswers;
     data['totalQuestions'] = totalQuestions;
-    data['createdDate'] = createdDate;
+    data['date'] = createdDate;
     return data;
   }
 }

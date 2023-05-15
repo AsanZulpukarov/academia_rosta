@@ -12,23 +12,42 @@ class StudentStaticScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Статистика день",
-              style: ThemeThisApp.styleTextHeader,
+            ExpansionTile(
+              title: Text(
+                "Статистика по дням",
+                style: ThemeThisApp.styleTextHeader,
+              ),
+              maintainState: true,
+              iconColor: ThemeThisApp.fillButton,
+              collapsedIconColor: ThemeThisApp.fillButton,
+              collapsedShape: ThemeThisApp.borderTextField,
+              shape: ThemeThisApp.borderTextField,
+              children: [
+                MarkWithDayFuture(),
+              ],
+              initiallyExpanded: true,
             ),
-            MarkWithDayFuture(),
             SizedBox(
               height: 30.h,
             ),
-            Text(
-              "Статистика тема",
-              style: ThemeThisApp.styleTextHeader,
+            ExpansionTile(
+              title: Text(
+                "Статистика по темам",
+                style: ThemeThisApp.styleTextHeader,
+              ),
+              maintainState: true,
+              iconColor: ThemeThisApp.fillButton,
+              collapsedIconColor: ThemeThisApp.fillButton,
+              collapsedShape: ThemeThisApp.borderTextField,
+              shape: ThemeThisApp.borderTextField,
+              children: [
+                MarkWithTopicFuture(),
+              ],
             ),
-            MarkWithTopicFuture(),
           ],
         ),
       ),

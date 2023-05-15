@@ -1,9 +1,8 @@
 import 'package:academia_rost/model/entity/user_info.dart';
 import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:academia_rost/pages/student_pages/static_widget/student_static_screen.dart';
-import 'package:academia_rost/pages/student_pages/timetable_student_screen.dart';
 import 'package:academia_rost/pages/teacher_pages/my_groups_widget/groups_screen.dart';
-import 'package:academia_rost/pages/teacher_pages/search_page.dart';
+import 'package:academia_rost/pages/teacher_pages/search_screen/search_screen.dart';
 import 'package:academia_rost/pages/trainer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,15 +17,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Widget> studentPage = [
-    TimetableStudentScreen(),
-    TrainerPage(),
-    StudentStaticScreen()
-  ];
-  List<Widget> teacherPage = [
+  List<Widget> mainPage = [
     GroupsScreen(),
     TrainerPage(),
-    SearchPage(),
   ];
   int _selectedIndex = 1;
   bool role = StaticVariable.userLoginEntity.roleUser ==
@@ -43,6 +36,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    mainPage.add(role ? StudentStaticScreen() : SearchPage());
   }
 
   UserInfo? userInfo;
@@ -69,52 +63,36 @@ class _MainPageState extends State<MainPage> {
       ),
       body: Container(
           // index: _selectedIndex,
-          child: role
-              ? studentPage.elementAt(_selectedIndex)
-              : teacherPage.elementAt(_selectedIndex)),
+          child: mainPage.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 30.0.sp,
-        items: role
-            ? const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.calendar_month,
-                  ),
-                  label: 'Расписание',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.calculate,
-                  ),
-                  label: 'Тренировка',
-                ),
-                BottomNavigationBarItem(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.people,
+            ),
+            label: 'Группа',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.calculate,
+            ),
+            label: 'Тренировка',
+          ),
+          role
+              ? BottomNavigationBarItem(
                   icon: Icon(
                     Icons.query_stats,
                   ),
                   label: 'Статистика',
-                ),
-              ]
-            : const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.people,
-                  ),
-                  label: 'Группа',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.calculate,
-                  ),
-                  label: 'Тренировка',
-                ),
-                BottomNavigationBarItem(
+                )
+              : BottomNavigationBarItem(
                   icon: Icon(
                     Icons.search,
                   ),
                   label: 'Поиск студента',
                 ),
-              ],
+        ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),

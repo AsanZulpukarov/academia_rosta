@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../model/entity/teacher_entity/group_entity.dart';
 import '../../../theme_this_app.dart';
-import '../../../widgets/get_row_text_widget.dart';
+import '../../../widgets/get_row_widget.dart';
 
 class MyGroupsWidget extends StatelessWidget {
   List<GroupEntity>? courses;
@@ -50,13 +50,13 @@ class MyGroupsWidget extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              GetRowText.getText("Мугалим",
+              GetRow.getText("Мугалим",
                   "${nameCourse?.teacher?.lastname} ${nameCourse?.teacher?.firstname}"),
               SizedBox(
                 height: 10.h,
               ),
-              GetRowText.getText(
-                  "Окуучулардын саны", "${nameCourse?.subject?.name}"),
+              // GetRow.getText(
+              //     "Окуучулардын саны", "${nameCourse?.subject?.name}"),
             ],
           ),
         ),

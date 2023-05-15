@@ -27,8 +27,9 @@ class MarkWithTopicEntity {
   }
 
   setTopic(String? jsonTopic) {
-    if (jsonTopic == null || jsonTopic == "PSV")
+    if (jsonTopic == null || jsonTopic == "PSV") {
       return "Простое\nСложение\nВычитание";
+    }
     if (jsonTopic.substring(0, 2) == "PB") {
       return 'Помощь\nбрата\n${jsonTopic.substring(2)}';
     } else {

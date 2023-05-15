@@ -1,9 +1,11 @@
 import 'package:academia_rost/model/static_variable/static_variable.dart';
 import 'package:academia_rost/service/api_service/api_client.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../model/entity/student_entity/mark_entites/mark_with_topic_entity.dart';
+import '../../../../widgets/get_row_widget.dart';
 import '../circular_widget/circular_topic_widget.dart';
 
 class MarkWithTopicFuture extends StatefulWidget {
@@ -28,22 +30,31 @@ class _MarkWithTopicFutureState extends State<MarkWithTopicFuture> {
         future: markWithTopicFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return SizedBox(
-              height: 180.h,
-              child: ListView.builder(
-                addAutomaticKeepAlives: false,
-                reverse: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: 180.w,
-                    child: ShowStaticWithTopicWidget(
-                        snapshot.data?.elementAt(index) ??
-                            MarkWithTopicEntity()),
-                  );
-                },
-              ),
+            return Column(
+              children: [
+                SizedBox(
+                  height: 174.h,
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    trackVisibility: true,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        return SizedBox(
+                          width: 174.w,
+                          child: ShowStaticWithTopicWidget(snapshot.data
+                                  ?.elementAt(
+                                      (snapshot.data?.length)! - index - 1) ??
+                              MarkWithTopicEntity()),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                GetRow.getCorrectAndWrongInfo(),
+              ],
             );
           } else if (snapshot.hasError) {
             return const Center(

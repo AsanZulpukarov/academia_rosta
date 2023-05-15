@@ -2,9 +2,9 @@
     package="com.example.academi_rost">
    <application
         android:allowBackup="true"
-        android:label="academi_rost"
+        android:label="academia_rost"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

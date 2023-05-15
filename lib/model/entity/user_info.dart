@@ -20,12 +20,12 @@ class UserInfo {
 
   UserInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'] as int;
-    firstname = json['firstname'];
-    lastname = json['lastname'];
+    firstname = json['firstname'] ?? "Пусто";
+    lastname = json['lastname'] ?? "Пусто";
     username = json['username'];
     age = json['age'] as int;
-    phoneNumber = json['phoneNumber'];
-    address = json['address'];
+    phoneNumber = json['phoneNumber'] ?? "Пусто";
+    address = json['address'] ?? "Пусто";
     role = json['role'];
   }
 

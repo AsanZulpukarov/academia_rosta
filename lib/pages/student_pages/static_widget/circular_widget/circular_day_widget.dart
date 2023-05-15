@@ -14,13 +14,11 @@ class ShowStaticWithDayWidget extends StatelessWidget {
     return SfCircularChart(
       annotations: <CircularChartAnnotation>[
         CircularChartAnnotation(
-          widget: Container(
-            child: Center(
-              child: Text(
-                markDay.getCreatedDate(),
-                style: ThemeThisApp.styleTextBase,
-                textAlign: TextAlign.center,
-              ),
+          widget: Center(
+            child: Text(
+              markDay.getCreatedDate(),
+              style: ThemeThisApp.styleTextBase,
+              textAlign: TextAlign.center,
             ),
           ),
         ),

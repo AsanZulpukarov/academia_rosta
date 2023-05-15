@@ -36,7 +36,6 @@ class _GroupsScreenState extends State<GroupsScreen> {
               courses: snapshot.data,
             );
           } else if (snapshot.hasError) {
-            print(snapshot.error);
             return const Center(child: Text(StaticVariable.errorFuture));
           }
 

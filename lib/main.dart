@@ -1,6 +1,8 @@
 import 'package:academia_rost/model/entity/teacher_entity/group_entity.dart';
+import 'package:academia_rost/model/entity/user_info.dart';
+import 'package:academia_rost/pages/profile_pages/profil_info_widget.dart';
 import 'package:academia_rost/pages/profile_pages/profile_screen.dart';
-import 'package:academia_rost/pages/teacher_pages/select_group_page/select_group_info_screen.dart';
+import 'package:academia_rost/pages/select_group_page/select_group_info_screen.dart';
 import 'package:academia_rost/theme_this_app.dart';
 import 'package:academia_rost/pages/auth_pages.dart';
 import 'package:academia_rost/pages/splash_screen.dart';
@@ -29,13 +31,21 @@ class SignIn extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              appBarTheme:
-                  const AppBarTheme(backgroundColor: ThemeThisApp.fillButton),
-              bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-                backgroundColor: ThemeThisApp.fillButton,
-                selectedItemColor: ThemeThisApp.borderColor,
-                unselectedItemColor: ThemeThisApp.textInButtonColor,
-              )),
+            appBarTheme:
+                const AppBarTheme(backgroundColor: ThemeThisApp.fillButton),
+            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+              backgroundColor: ThemeThisApp.fillButton,
+              selectedItemColor: ThemeThisApp.borderColor,
+              unselectedItemColor: ThemeThisApp.textInButtonColor,
+            ),
+            scrollbarTheme: ScrollbarThemeData(
+              thumbColor: MaterialStatePropertyAll<Color>(
+                  ThemeThisApp.borderColor), // цвет ползунка
+              trackColor: MaterialStatePropertyAll<Color>(ThemeThisApp
+                  .fillButton
+                  .withAlpha(80)), // цвет фона полосы прокрутки
+            ),
+          ),
           routes: {
             '/splash_screen': (context) => const SplashScreen(),
             '/auth': (context) => const FormRegister(),
@@ -44,7 +54,9 @@ class SignIn extends StatelessWidget {
               return ProfileScreen();
             },
             '/teacher/search_student': (context) {
-              return ProfileScreen();
+              UserInfo user =
+                  ModalRoute.of(context)?.settings.arguments as UserInfo;
+              return ProfileScreen.selectStudent(false, user);
             },
             '/trainer/showNumber': (context) {
               RandomValCharacterAndTheme val = ModalRoute.of(context)
@@ -53,8 +65,8 @@ class SignIn extends StatelessWidget {
               return ShowRandomValWidget(val);
             },
             '/teacher/groups/selectGroup': (context) {
-              GroupEntity group =
-                  ModalRoute.of(context)?.settings.arguments as GroupEntity;
+              GroupEntity? group =
+                  ModalRoute.of(context)?.settings.arguments as GroupEntity?;
               return SelectGroupInfoScreen(group);
             }
           },

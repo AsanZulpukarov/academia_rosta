@@ -21,11 +21,13 @@ class ApiClientHttp {
     print(url);
     var response = await client.post(url,
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.acceptCharsetHeader: 'utf-8',
         },
         body: jsonEncode(userAuthEntity.toJson()));
     if (response.statusCode == 200 || response.statusCode == 201) {
-      final parsed = jsonDecode(response.body) as Map<String, dynamic>;
+      final responseBody = utf8.decode(response.bodyBytes);
+      final parsed = jsonDecode(responseBody) as Map<String, dynamic>;
       StaticVariable.userLoginEntity
           .fromJson(parsed, remember, userAuthEntity.username!);
       text = 'Успешно';
@@ -42,14 +44,15 @@ class ApiClientHttp {
     var client = http.Client();
     var url = Uri.http(StaticVariable.urlIp, '/api/user/');
     var response = await client.get(url, headers: <String, String>{
-      'Content-Type': 'application/json',
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.acceptCharsetHeader: 'utf-8',
       HttpHeaders.authorizationHeader:
           StaticVariable.userLoginEntity.token ?? "",
     });
     if (response.statusCode == 200) {
-      print(response.body);
+      final responseBody = utf8.decode(response.bodyBytes);
       return UserInfo.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>);
+          jsonDecode(responseBody) as Map<String, dynamic>);
     } else {
       return UserInfo();
     }
@@ -60,18 +63,19 @@ class ApiClientHttp {
     var url = Uri.http(StaticVariable.urlIp, '/api/group/');
     print(url);
     var response = await client.get(url, headers: <String, String>{
-      'Content-Type': 'application/json',
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.acceptCharsetHeader: 'utf-8',
       HttpHeaders.authorizationHeader:
           StaticVariable.userLoginEntity.token ?? "",
     });
     if (response.statusCode == 200 || response.statusCode == 201) {
       print(response.body);
-      List<dynamic> myGroups = jsonDecode(response.body) as List;
+      final responseBody = utf8.decode(response.bodyBytes);
+      List<dynamic> myGroups = jsonDecode(responseBody) as List;
       List<GroupEntity> mygr =
           myGroups.map((json) => GroupEntity.fromJson(json)).toList();
       return mygr;
     } else {
-      print(StaticVariable.userLoginEntity.token);
       print(response.statusCode);
       return null;
     }
@@ -82,14 +86,20 @@ class ApiClientHttp {
     var url = Uri.http(StaticVariable.urlIp,
         '/api/mark/${StaticVariable.userLoginEntity.username}');
     print(url);
-    var response = await client.get(url, headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      HttpHeaders.authorizationHeader:
-          StaticVariable.userLoginEntity.token ?? "",
-    });
+    var response = await client.get(
+      url,
+      headers: <String, String>{
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.acceptCharsetHeader: 'utf-8',
+        HttpHeaders.authorizationHeader:
+            StaticVariable.userLoginEntity.token ?? "",
+      },
+    );
     if (response.statusCode == 200 || response.statusCode == 201) {
       print(response.body);
-      List<dynamic> markJson = jsonDecode(response.body) as List;
+
+      final responseBody = utf8.decode(response.bodyBytes);
+      List<dynamic> markJson = jsonDecode(responseBody) as List;
       List<MarkWithDayEntity> mark =
           markJson.map((json) => MarkWithDayEntity.fromJson(json)).toList();
       return mark;
@@ -104,16 +114,64 @@ class ApiClientHttp {
     var url = Uri.http(StaticVariable.urlIp,
         '/api/mark/${StaticVariable.userLoginEntity.username}/byTopics');
     var response = await client.get(url, headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.acceptCharsetHeader: 'utf-8',
       HttpHeaders.authorizationHeader:
           StaticVariable.userLoginEntity.token ?? "",
     });
     if (response.statusCode == 200 || response.statusCode == 201) {
       print(response.body);
-      List<dynamic> markJson = jsonDecode(response.body) as List;
+      final responseBody = utf8.decode(response.bodyBytes);
+      List<dynamic> markJson = jsonDecode(responseBody) as List;
       List<MarkWithTopicEntity> mark =
           markJson.map((json) => MarkWithTopicEntity.fromJson(json)).toList();
       return mark;
+    } else {
+      print(response.statusCode);
+      return null;
+    }
+  }
+
+  Future<List<UserInfo?>?> loadGroupStudents(int? id) async {
+    var client = http.Client();
+    var url = Uri.http(StaticVariable.urlIp, '/api/user/$id/members');
+    print(url);
+    var response = await client.get(url, headers: <String, String>{
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.acceptCharsetHeader: 'utf-8',
+      HttpHeaders.authorizationHeader:
+          StaticVariable.userLoginEntity.token ?? "",
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.body);
+      final responseBody = utf8.decode(response.bodyBytes);
+      List<dynamic> myGroups = jsonDecode(responseBody) as List;
+      List<UserInfo?> students =
+          myGroups.map((json) => UserInfo.fromJson(json)).toList();
+      return students;
+    } else {
+      print(response.statusCode);
+      return null;
+    }
+  }
+
+  Future<List<UserInfo>?> loadAllPupils() async {
+    var client = http.Client();
+    var url = Uri.http(StaticVariable.urlIp, '/api/user/pupils');
+    print(url);
+    var response = await client.get(url, headers: <String, String>{
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.acceptCharsetHeader: 'utf-8',
+      HttpHeaders.authorizationHeader:
+          StaticVariable.userLoginEntity.token ?? "",
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.body);
+      final responseBody = utf8.decode(response.bodyBytes);
+      List<dynamic> myGroups = jsonDecode(responseBody) as List;
+      List<UserInfo> students =
+          myGroups.map((json) => UserInfo.fromJson(json)).toList();
+      return students;
     } else {
       print(response.statusCode);
       return null;
