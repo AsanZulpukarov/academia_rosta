@@ -1,16 +1,6 @@
-# academi_rost
+# academia_rosta
 
-A new Flutter project.
+Академия Роста – сеть учебных центров по всему Кыргызстану. Основана в 2015 году.
+С момента открытия предоставляет услуги в сфере образования. Является первым учебным центром в стране по преподаванию Ментальной арифметики, ученики регулярно занимают первые места в международных олимпиадах. Академия роста так же является организатором ежегодных Олимпиад республиканского масштаба в которой принимают участие более 500 участников различных возрастных категорий.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
